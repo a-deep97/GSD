@@ -1,22 +1,88 @@
+
 const express = require('express');
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.send('this is task page');
+const Task = require('../DB/models/task');
+const generateUniqueNumber = require('../lib/unique_id');
+
+// Gets a task content
+router.get('/:id', async (req, res) => {
+    try {
+        const task = await Task.findOne({taskId:req.params.id});
+        if (!task) {
+            return res.status(404).json({ message: 'Task not found' });
+        }
+        res.json(task);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 });
 
-router.post('/', (req, res) => {
-  res.send('Resource created successfully');
+// Creates a  unique id
+async function generateUniqueID() {
+    let unique_id;
+    let existingTask;
+    while(true){
+        unique_id = generateUniqueNumber();
+        existingTask = await Task.findOne({ taskId: unique_id });
+        if(!existingTask){
+            break;
+        }
+    }
+    return unique_id;
+}
+
+// Creates a new task
+router.post('/', async (req, res) => {
+
+    const unique_id = await generateUniqueID();
+    const data = {
+        taskId: String(unique_id),
+        title: req.body.title,
+        description: req.body.description,
+        status: req.body.status,
+        owner: req.body.owner,        
+    }
+    console.log(data)
+    const task = new Task(data);
+
+    try {
+        const newTask = await task.save();
+        res.status(201).json(newTask);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
 });
 
-router.put('/:id', (req, res) => {
-  const resourceId = req.params.id;
-  res.send(`Resource with ID ${resourceId} updated successfully`);
+// Update a task
+router.put('/:id', async (req, res) => {
+    try {
+        const updatedTask = await Task.findOneAndUpdate(
+            {taskId: req.params.id},
+            req.body,
+            {new: true}
+        );
+        if (!updatedTask) {
+            return res.status(404).json({ message: 'Task not found' });
+        }
+        res.json(updatedTask);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
 });
 
-router.delete('/:id', (req, res) => {
-  const resourceId = req.params.id;
-  res.send(`Resource with ID ${resourceId} deleted successfully`);
+// Delete a task
+router.delete('/:id', async (req, res) => {
+    try {
+        const deletedTask = await Task.findOneAndDelete(
+            {taskId: req.params.id});
+        if (!deletedTask) {
+            return res.status(404).json({ message: 'Task not found' });
+        }
+        res.json({ message: 'Task deleted' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 });
 
 module.exports = router;

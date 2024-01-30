@@ -8,7 +8,7 @@ const generateUniqueNumber = require('../lib/unique_id');
 // Gets a project content
 router.get('/:id', async (req, res) => {
     try {
-        const project = await Project.findById(req.params.id);
+        const project = await Project.findOne({ projectId:req.params.id});
         if (!project) {
             return res.status(404).json({ message: 'Project not found' });
         }
@@ -24,7 +24,7 @@ async function generateUniqueID() {
     let existingProject;
     while(true){
         unique_id = generateUniqueNumber();
-        existingProject = await Project.findOne({ project_id: unique_id });
+        existingProject = await Project.findOne({ projectId: unique_id });
         if(!existingProject){
             break;
         }

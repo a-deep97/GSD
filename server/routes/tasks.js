@@ -1,22 +1,15 @@
 const express = require('express');
 const router = express.Router();
+const Task = require('../DB/models/task');
 
-router.get('/', (req, res) => {
-  res.send('Welcome to the tasks page');
+router.get('/', async (req, res) => {
+    try {
+        const tasks = await Task.find();
+        res.json(tasks);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 });
 
-router.post('/', (req, res) => {
-  res.send('Resource created successfully');
-});
-
-router.put('/:id', (req, res) => {
-  const resourceId = req.params.id;
-  res.send(`Resource with ID ${resourceId} updated successfully`);
-});
-
-router.delete('/:id', (req, res) => {
-  const resourceId = req.params.id;
-  res.send(`Resource with ID ${resourceId} deleted successfully`);
-});
 
 module.exports = router;

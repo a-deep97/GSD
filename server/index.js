@@ -26,10 +26,8 @@ const projectRouter = require('./routes/project');
 const searchRouter = require('./routes/search');
 const taskRouter = require('./routes/task');
 
-app.use(bodyParser.urlencoded({
-  extended: true
-}))
-app.use(bodyParser.json())
+
+app.use(express.json());
 app.use('/tasks',tasksRouter);
 app.use('/tasks',tasksRouter);
 app.use('/projects',projectsRouter);

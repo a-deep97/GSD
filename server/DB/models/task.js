@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const taskSchema = new Schema({
-    id: {
+    taskId: {
         type: String,
         required: true,
         unique: true
@@ -11,20 +11,17 @@ const taskSchema = new Schema({
     title: {
         type: String,
         required: true,
-        unique: false
     },
-    project: {
+    projectId: {
         type: String,        
     },
     description: {
         type:  String,
         required: true,
-        unique: false
     },
     status: {
         type: String,
         required: true,
-        unique: true
     },
     owner: {
         type: String,
@@ -32,11 +29,11 @@ const taskSchema = new Schema({
     },
     createdAt: {
         type: Date,
-        default : new Date.now
+        default : Date.now
     },
     target: {
         type: Date,
-        default : new Date.now
+        default : Date.now
     }
 
 }, { timestamps: true });
