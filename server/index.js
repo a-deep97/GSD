@@ -20,6 +20,7 @@ mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
         console.error('Error connecting to MongoDB:', error);
     });
 
+const userRouter = require('./routes/user');   
 const tasksRouter = require('./routes/tasks');
 const projectsRouter = require('./routes/projects');
 const projectRouter = require('./routes/project');
@@ -28,6 +29,7 @@ const taskRouter = require('./routes/task');
 
 
 app.use(express.json());
+app.use('/',userRouter);
 app.use('/tasks',tasksRouter);
 app.use('/tasks',tasksRouter);
 app.use('/projects',projectsRouter);

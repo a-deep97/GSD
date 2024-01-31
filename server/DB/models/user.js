@@ -33,11 +33,11 @@ const userSchema = new Schema({
     },
     joinedAt: {
         type: Date,
-        default : new Date.now
+        default : Date.now
     },
     lastLogin: {
         type: Date,
-        default : new Date.now
+        default : Date.now
     }
 
 }, { timestamps: true });
