@@ -8,6 +8,7 @@ import TaskPage from './components/task';
 import ProjectsPage from './components/projects';
 import ProjectPage from './components/project';
 import DashboardPage from './components/dashboard';
+import SearchPage from './components/search';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path='projects' element={<ProjectsPage/>} />
           <Route path='project' element={<ProjectPage/>} />
           <Route path='dashboard' element={<DashboardPage/>} />
+          <Route path='search' element={<SearchPage/>}/>
         </Routes>
       </BrowserRouter>
     </div>

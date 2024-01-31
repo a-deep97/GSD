@@ -1,9 +1,10 @@
 import React from 'react';
+import TopNavbar from './utilities/top-navbar';
 
 const ProjectsPage = () => {
     return (
         <div>
-            projects
+            <TopNavbar/>
         </div>
     );
 };

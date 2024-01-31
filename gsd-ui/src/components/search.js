@@ -1,7 +1,7 @@
 import React from 'react';
 import TopNavbar from './utilities/top-navbar';
 
-const ProjectPage = () => {
+const SearchPage = () => {
     return (
         <div>
             <TopNavbar/>
@@ -9,4 +9,4 @@ const ProjectPage = () => {
     );
 };
 
-export default ProjectPage;
+export default SearchPage;
