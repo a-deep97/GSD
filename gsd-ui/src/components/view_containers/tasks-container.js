@@ -1,15 +1,17 @@
 import React from 'react';
+import {Box} from '@mui/material';
+
 import TaskListContainer from './task-list-container';
 
 const TasksContainer = () => {
     return (
-        <div className='tasks-container'>
-            <TaskListContainer/>
-            <TaskListContainer/>
-            <TaskListContainer/>
-            <TaskListContainer/>
-            <TaskListContainer/>
-        </div>
+        <Box alignSelf='center' display='flex' flexDirection='row' alignContent='flex-start' alignItems='center'>
+                <TaskListContainer/>
+                <TaskListContainer/>
+                <TaskListContainer/>
+                <TaskListContainer/>
+                <TaskListContainer/>
+        </Box>
     );
 };
 

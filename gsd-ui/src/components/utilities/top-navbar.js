@@ -20,16 +20,14 @@ function TopNavbar(){
         navigate('/search')
     }
     return (
-        <div className="top-navbar">
-            <AppBar position="relative" style={{'background':'black'}} >
-                <Toolbar>
-                    <Button variant='text' size='large' style={{'color':'white'}} onClick={() =>handleTasksLink()}>Tasks</Button>
-                    <Button variant='text' size='large' style={{'color':'white'}} onClick={() => handleProjectsLink()}>Projects</Button>
-                    <Button variant='text' size='large' style={{'color':'white'}} onClick={() => handleDashboardLink()}>Dashboard</Button>
-                    <Button variant='text' size='large' style={{'color':'white'}} onClick={() => handleSearchLink()}>Search</Button>
-                </Toolbar>
-            </AppBar>
-        </div>
+        <AppBar position="relative" style={{'background':'black'}} >
+            <Toolbar>
+                <Button variant='text' size='large' style={{'color':'white'}} onClick={() =>handleTasksLink()}>Tasks</Button>
+                <Button variant='text' size='large' style={{'color':'white'}} onClick={() => handleProjectsLink()}>Projects</Button>
+                <Button variant='text' size='large' style={{'color':'white'}} onClick={() => handleDashboardLink()}>Dashboard</Button>
+                <Button variant='text' size='large' style={{'color':'white'}} onClick={() => handleSearchLink()}>Search</Button>
+            </Toolbar>
+        </AppBar>
     );
 }
 

@@ -1,11 +1,13 @@
 import React from 'react';
+import {Box} from '@mui/material';
+
 import ProjectCard from './project-card';
 
 const ProjectListContainer = () => {
     return (
-        <div className='project-list-container'>
-            <ProjectCard/> //dummy
-        </div>
+        <Box marginTop={2} paddingTop={3} display='flex' flexDirection='column' alignContent='flex-start' alignItems='center'>
+            <ProjectCard/>
+        </Box>
     );
 };
 
