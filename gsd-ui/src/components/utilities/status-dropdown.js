@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FormControl, InputLabel, Select, MenuItem, Typography } from '@mui/material';
 import Status from '../../constants/status';
 
-const StatusDropdown = ({taskStatus,handleStatusDropdown}) => {
+const StatusDropdown = ({taskStatus,handleStatusDropdown ,width,height}) => {
 
     const [currentStatus,setCurrentStatus] = useState(taskStatus)
     const handleDropdown = (e) =>{
@@ -16,8 +16,8 @@ const StatusDropdown = ({taskStatus,handleStatusDropdown}) => {
     }
     return (
         <FormControl style={{
-            width: '140px',
-            height: '30px',
+            width: width? width : '140px',
+            height: height ? height : '40px',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
@@ -33,7 +33,7 @@ const StatusDropdown = ({taskStatus,handleStatusDropdown}) => {
                 onClick={(e) =>{handleClick(e)}}
                 style={{
                     width: '100%',
-                    height: '30px',
+                    height: height ? height : '40px',
                     paddingTop: '0',
                     paddingBottom: '0',
                     paddingLeft: '0',
