@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useNavigate } from 'react-router-dom';
-import { AppBar, Button, Toolbar, Typography } from "@mui/material";
+import { AppBar, Button, Toolbar, Box } from "@mui/material";
 
 function TopNavbar(){
 
