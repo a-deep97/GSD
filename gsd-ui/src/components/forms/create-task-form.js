@@ -45,6 +45,9 @@ const CreateTaskForm = ({formActive,setFormActive}) => {
     const handleFormClose = ()=>{
         setFormActive(false)
     } 
+    const handleSubmit = () =>{
+      console.log('saving...')
+    }
   return (
     <Modal
       open={formActive}
@@ -60,9 +63,14 @@ const CreateTaskForm = ({formActive,setFormActive}) => {
     >
       <Fade in={formActive}>
         <Card style={{ width: '700px', height: '550px' }}>
-          <IconButton onClick={handleFormClose}>
+          <IconButton width='100%' onClick={handleFormClose}>
             <CloseIcon />
           </IconButton>
+          <Box display='flex' flexDirection='row' marginLeft='20px'>
+            <Button variant="contained" color="primary" size='small' onClick={handleSubmit}>
+                Save
+            </Button>  
+          </Box>
           <CardContent>
             <Box
               display="flex"
@@ -168,6 +176,7 @@ const CreateTaskForm = ({formActive,setFormActive}) => {
                   label="description"
                   multiline
                   variant="filled"
+                  rows ={8}
                   placeholder="description..."
                   value={description}
                   onChange={(e) => {

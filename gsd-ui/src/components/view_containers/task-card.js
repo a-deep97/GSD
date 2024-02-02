@@ -5,6 +5,7 @@ import { makeStyles } from '@mui/styles';
 import TaskView from './task-view';
 import StatusDropdown from '../utilities/status-dropdown';
 import CustomDatePicker from '../utilities/date-picker';
+import DateType from '../../constants/date-type';
 
 const useStyles = makeStyles({
   root: {
@@ -69,8 +70,8 @@ const TaskCard = () => {
                         <StatusDropdown taskStatus={taskStatus} handleStatusDropdown={handleStatusDropdown}/>
                     </Box>
                     <Box display='flex' flexDirection='row' justifyContent='center' alignItems='center'>
-                        <CustomDatePicker Date={startDate} handleDateChange={handleTargetDateChange}/>
-                        <CustomDatePicker Date={targetDate} handleDateChange={handleStartDateChange}/>
+                        <CustomDatePicker Date={startDate} handleDateChange={handleTargetDateChange} dateType={DateType.START}/>
+                        <CustomDatePicker Date={targetDate} handleDateChange={handleStartDateChange} dateType={DateType.TARGET}/>
                     </Box>
                     <Box style={{
                         height: '100px',
