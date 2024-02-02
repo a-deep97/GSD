@@ -17,15 +17,7 @@ import CustomDatePicker from '../utilities/date-picker';
 
 const CreateTaskForm = ({formActive,setFormActive}) => {
 
-    const dummyTask = {
-        title: 'Task Title',
-        taskNumber: 'T001',
-        status: 'In Progress',
-        target: '2024-12-31',
-        startDate: '2024-01-01',
-        project: 'Project Name',
-        description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.'
-      };
+
     const [taskNumber,setTaskNumber] = useState('');
     const [title,setTitle] = useState('')
     const [taskStatus,setTaskStatus] = useState('');
@@ -33,8 +25,9 @@ const CreateTaskForm = ({formActive,setFormActive}) => {
     const [targetDate,setTargetDate] = useState('');
     const [description,setDescription] = useState('');
     const [project,setProject] = useState('');
-    const handleStatusDropdown = () =>{
-        console.log('handle change')
+
+    const handleStatusDropdown = (status) =>{
+        setTaskStatus(status)
     }
     const handleTargetDateChange = (date) => {
         setTargetDate(date);
@@ -46,7 +39,38 @@ const CreateTaskForm = ({formActive,setFormActive}) => {
         setFormActive(false)
     } 
     const handleSubmit = () =>{
-      console.log('saving...')
+      const formData = {
+        'title': title,
+        'project': project,
+        'status': taskStatus,
+        'description': description,
+        'start' : startDate,
+        'target' : targetDate
+      }
+      const url = 'http://127.0.0.1:5000/task';
+      fetch(url, {
+        method: 'POST', // Specify the HTTP method
+        headers: {
+          'Content-Type': 'application/json' // Specify the content type as JSON
+        },
+        body: JSON.stringify(formData) // Convert the form data to JSON string
+      })
+        .then(response => {
+          // Check if the response is successful (status code 200-299)
+          debugger
+          if (response.ok) {
+            // If successful, you can handle the response here
+            console.log('Form data submitted successfully');
+            handleFormClose(false)
+          } else {
+            // If not successful, throw an error
+            throw new Error('Failed to submit form data');
+          }
+        })
+        .catch(error => {
+          // Handle any errors that occurred during the fetch call
+          console.error('Error:', error);
+        });
     }
   return (
     <Modal
@@ -67,7 +91,7 @@ const CreateTaskForm = ({formActive,setFormActive}) => {
             <CloseIcon />
           </IconButton>
           <Box display='flex' flexDirection='row' marginLeft='20px'>
-            <Button variant="contained" color="primary" size='small' onClick={handleSubmit}>
+            <Button type='submit' variant="contained" color="primary" size='small' onClick={handleSubmit}>
                 Save
             </Button>  
           </Box>
@@ -146,7 +170,7 @@ const CreateTaskForm = ({formActive,setFormActive}) => {
                   <Typography variant="caption">start</Typography>
                   <CustomDatePicker
                     Date={startDate}
-                    handleDateChange={handleTargetDateChange}
+                    handleDateChange={handleStartDateChange}
                   />
                 </Box>
                 <Box
@@ -160,7 +184,7 @@ const CreateTaskForm = ({formActive,setFormActive}) => {
                   <Typography variant="caption">target</Typography>
                   <CustomDatePicker
                     Date={targetDate}
-                    handleDateChange={handleStartDateChange}
+                    handleDateChange={handleTargetDateChange}
                   />
                 </Box>
               </Box>

@@ -23,11 +23,7 @@ const taskSchema = new Schema({
         type: String,
         required: true,
     },
-    owner: {
-        type: String,
-        required: true
-    },
-    createdAt: {
+    start: {
         type: Date,
         default : Date.now
     },

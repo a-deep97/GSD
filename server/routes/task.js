@@ -41,7 +41,8 @@ router.post('/', async (req, res) => {
         title: req.body.title,
         description: req.body.description,
         status: req.body.status,
-        owner: req.body.owner,        
+        start: req.body.start,
+        target: req.body.target
     }
     console.log(data)
     const task = new Task(data);

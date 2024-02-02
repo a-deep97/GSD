@@ -7,9 +7,8 @@ const StatusDropdown = ({taskStatus,handleStatusDropdown ,width,height}) => {
     const [currentStatus,setCurrentStatus] = useState(taskStatus)
     const handleDropdown = (e) =>{
         e.stopPropagation()
-        debugger
         setCurrentStatus(e.target.value)
-        handleStatusDropdown()
+        handleStatusDropdown(e.target.value)
     }
     const handleClick = (e) =>{
         e.stopPropagation()
@@ -39,27 +38,27 @@ const StatusDropdown = ({taskStatus,handleStatusDropdown ,width,height}) => {
                     paddingLeft: '0',
                 }}
                 >
-                <MenuItem value={10}>
+                <MenuItem value={Status.None}>
                     <Typography variant='body'>
                         {Status.None}
                     </Typography>
                 </MenuItem>
-                <MenuItem value={20}>
+                <MenuItem value={Status.Planned}>
                     <Typography variant='body'>
                         {Status.Planned}
                     </Typography>
                 </MenuItem>
-                <MenuItem value={30}>
+                <MenuItem value={Status.Progress}>
                     <Typography variant='body'>
                         {Status.Progress}
                     </Typography>
                 </MenuItem>
-                <MenuItem value={40}>
+                <MenuItem value={Status.Completed}>
                     <Typography variant='body'>
                         {Status.Completed}
                     </Typography>
                 </MenuItem>
-                <MenuItem value={50}>
+                <MenuItem value={Status.Backlog}>
                     <Typography variant='body'>
                         {Status.Backlog}
                     </Typography>

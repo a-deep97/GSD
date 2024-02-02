@@ -13,6 +13,7 @@ const CustomDatePicker = ({Date,handleDateChange,dateType}) => {
         e.stopPropagation()
     }
     const handleChange = (newDate) =>{
+        debugger
         handleDateChange(newDate);
         setDate(newDate);
     } 
@@ -21,7 +22,8 @@ const CustomDatePicker = ({Date,handleDateChange,dateType}) => {
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DesktopDatePicker
                 defaultValue={dayjs('2022-04-17')}
-                onChange={handleDateChange}
+                value={date}
+                onChange={(newDate) => {handleChange(newDate)}}
                 />
             </LocalizationProvider>
         </Box>
