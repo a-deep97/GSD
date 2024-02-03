@@ -92,9 +92,6 @@ const TaskCard = ({taskId,task}) => {
                 style={{'margin':'5px', width: '95%', height:'170px'}} 
                 variant="outlined" 
                 onClick={handleClick}
-                sx={{
-                    backgroundColor: 'rgba(0,0,0,0.2)',
-                }}
             >
                 <CardContent>
                     <Box display='flex' flexDirection='row' alignItems='center' alignContent='flex-start'>

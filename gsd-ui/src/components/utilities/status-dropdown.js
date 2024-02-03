@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FormControl, InputLabel, Select, MenuItem, Typography } from '@mui/material';
 import Status from '../../constants/status';
+import StatusColorCode from '../../constants/status-color';
 
 const StatusDropdown = ({taskStatus,handleStatusDropdown ,width,height}) => {
 
@@ -21,6 +22,9 @@ const StatusDropdown = ({taskStatus,handleStatusDropdown ,width,height}) => {
             justifyContent: 'center',
             alignItems: 'center',
             marginLeft: '10px',
+        }}
+        sx={{
+            backgroundColor: StatusColorCode[taskStatus],
         }}
         >
             <Select
