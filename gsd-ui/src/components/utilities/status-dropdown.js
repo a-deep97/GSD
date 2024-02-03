@@ -27,7 +27,7 @@ const StatusDropdown = ({taskStatus,handleStatusDropdown ,width,height}) => {
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={currentStatus}
-                label={currentStatus}
+                label='status'
                 onChange={(e) => (handleDropdown(e))}
                 onClick={(e) =>{handleClick(e)}}
                 style={{

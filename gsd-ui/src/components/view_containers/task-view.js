@@ -24,32 +24,54 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TaskView = ({ open, onClose, task }) => {
+const TaskView = ({ open, onClose,taskId, task }) => {
 
     const [openTaskView, setOpenTaskView] = useState(false);
-    const [taskStatus,setTaskStatus] = useState(null);
-    const [startDate,setStartDate] = useState(null);
-    const [targetDate,setTargetDate] = useState(null);
-    const dummyTask = {
-        title: 'Task Title',
-        taskNumber: 'T001',
-        status: 'In Progress',
-        target: '2024-12-31',
-        startDate: '2024-01-01',
-        project: 'Project Name',
-        description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.'
-      };
-      
+    const [taskStatus,setTaskStatus] = useState(task.status);
+    const [startDate,setStartDate] = useState(task.start);
+    const [targetDate,setTargetDate] = useState(task.target);
     
-    const handleStatusDropdown = () =>{
-        console.log('handle change')
+    
+    const handleStatusDropdown = (currentStatus) =>{
+      updateTaskDetails({
+        'status': currentStatus
+      })
+      window.location.reload()
     }
     const handleTargetDateChange = (date) => {
         setTargetDate(date);
+        updateTaskDetails({
+          'start': date
+        })
     }
     const handleStartDateChange = (date) =>{
         setStartDate(date)
-    }
+        updateTaskDetails({
+          'target': date
+        })
+    } 
+    const updateTaskDetails = (data) =>{
+      const url = `http://localhost:5000/task/${taskId}`;
+      fetch(url, {
+          method: 'PUT',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+      })
+      .then(response => {
+          if (!response.ok) {
+          throw new Error('Network response was not ok');
+          }
+          return response.json();
+      })
+      .then(data => {
+          console.log('Response:', data);
+      })
+      .catch(error => {
+          console.error('There was a problem with the fetch operation:', error);
+      });
+  }
   return (
     <Modal
       open={open}
@@ -72,25 +94,25 @@ const TaskView = ({ open, onClose, task }) => {
           <CardContent>
             <Box display='flex' flexDirection='row' alignItems='center' alignContent='flex-start'>
                 <Typography variant='h4' marginLeft='5px' color="textSecondary">
-                    {dummyTask.taskNumber}
+                    T{taskId}
                 </Typography>
                 <Typography marginLeft='10px' variant="h6" color='primary'>
-                    {dummyTask.title}
+                    { task && task.title}
                 </Typography>
             </Box>
             <Box display='flex' marginTop={2} width={700} flexDirection='row' alignContent='flex-start' alignItems='center'>
-                <Typography variant="h6" component="p">
-                    {dummyTask.project}
+                <Typography variant="h6" component="p" width='30%'>
+                    {task && task.project}
                 </Typography>
-                <StatusDropdown taskStatus={taskStatus} handleStatusDropdown={handleStatusDropdown}/>
-                <Box marginLeft={5} display='flex' flexDirection='row' justifyContent='center' alignItems='center'>
-                    <Box marginLeft={2} marginRight={2} display='flex' flexDirection='column' alignContent='center' alignItems='flex-start'>
+                <StatusDropdown taskStatus={taskStatus} handleStatusDropdown={handleStatusDropdown} width='30%' />
+                <Box marginLeft={2} display='flex' flexDirection='row' justifyContent='center' alignItems='center'>
+                    <Box marginLeft='5px' display='flex' flexDirection='column' alignContent='center' alignItems='flex-start'>
                         <Typography variant='caption'>
                             start
                         </Typography>
                         <CustomDatePicker Date={startDate} handleDateChange={handleTargetDateChange}/>
                     </Box>
-                    <Box marginLeft={2} marginRight={2} display='flex' flexDirection='column' alignContent='center' alignItems='flex-start'>
+                    <Box marginLeft='5px' display='flex' flexDirection='column' alignContent='center' alignItems='flex-start'>
                         <Typography variant='caption'>
                             target
                         </Typography>
@@ -105,7 +127,7 @@ const TaskView = ({ open, onClose, task }) => {
                 marginTop={2}
             >
                 <Typography variant='caption'>
-                    {dummyTask.description}
+                    {task && task.description}
                 </Typography>
             </Box>
           </CardContent>

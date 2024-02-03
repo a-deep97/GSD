@@ -7,6 +7,7 @@ import StatusDropdown from '../utilities/status-dropdown';
 import CustomDatePicker from '../utilities/date-picker';
 import DateType from '../../constants/date-type';
 import StatusColorCode from '../../constants/status-color';
+import Status from '../../constants/status';
 
 const useStyles = makeStyles({
   root: {
@@ -22,12 +23,11 @@ const useStyles = makeStyles({
 });
 
 const TaskCard = ({taskId,task}) => {
-    const classes = useStyles();
+
     const [openTaskView, setOpenTaskView] = useState(false);
     const [taskStatus,setTaskStatus] = useState(task.status);
     const [startDate,setStartDate] = useState(task.start);
     const [targetDate,setTargetDate] = useState(task.target);
-
 
     const taskID = taskId
     const dummyTask = {
@@ -45,16 +45,47 @@ const TaskCard = ({taskId,task}) => {
     const onTaskClose = () =>{
         setOpenTaskView(false);
     }
-    const handleStatusDropdown = () =>{
-        console.log('handle change')
+    const handleStatusDropdown = (currentStatus) =>{
+        setTaskStatus(currentStatus)
+        updateTaskDetails({
+            'status': currentStatus
+        })
+        window.location.reload()
     }
     const handleTargetDateChange = (date) => {
         setTargetDate(date);
+        updateTaskDetails({
+            'start': date
+        })
     }
     const handleStartDateChange = (date) =>{
         setStartDate(date)
+        updateTaskDetails({
+            'target': date
+        })
     }
-
+    const updateTaskDetails = (data) =>{
+        const url = `http://localhost:5000/task/${taskId}`;
+        fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (!response.ok) {
+            throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Response:', data);
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+    }
     return (
         <Box>
             <Card 
@@ -68,15 +99,29 @@ const TaskCard = ({taskId,task}) => {
                 <CardContent>
                     <Box display='flex' flexDirection='row' alignItems='center' alignContent='flex-start'>
                         <Typography marginLeft='5px' color="textSecondary">
-                            {dummyTask.taskNumber}
+                            T{taskId}
                         </Typography>
-                        <Typography marginLeft='10px' variant="subtitle" color='primary'>
-                            {dummyTask.title}
+                        <Typography marginLeft='10px' variant="subtitle" color='primary'
+                            sx={{ overflow: 'hidden', 
+                                textOverflow: 'ellipsis', 
+                                whiteSpace: 'nowrap' 
+                            }}
+                        >
+                            {task && task.title}
                         </Typography>
                     </Box>
-                    <Box display='flex' flexDirection='row' alignContent='flex-start' alignItems='center'>
-                        <Typography variant="body2" component="p">
-                            {dummyTask.project}
+                    <Box display='flex' 
+                        flexDirection='row' 
+                        alignContent='flex-start' 
+                        alignItems='center'
+                    >
+                        <Typography variant="body2" component="p" width='50%'
+                            sx={{ overflow: 'hidden', 
+                            textOverflow: 'ellipsis', 
+                            whiteSpace: 'nowrap' 
+                        }}
+                        >
+                            {task && task.project}
                         </Typography>
                         <StatusDropdown taskStatus={taskStatus} handleStatusDropdown={handleStatusDropdown}/>
                     </Box>
@@ -91,14 +136,14 @@ const TaskCard = ({taskId,task}) => {
                         marginTop={2}
                     >
                         <Typography variant='caption'>
-                            {dummyTask.description}
+                            {task && task.description}
                         </Typography>
                     </Box>
                 </CardContent>
             </Card>
             {
                 openTaskView ?
-                <TaskView open={openTaskView} onClose={onTaskClose} task={dummyTask}/> :
+                <TaskView open={openTaskView} onClose={onTaskClose} taskId={taskId} task={task}/> :
                 null
             }
         </Box>
