@@ -3,9 +3,9 @@ import { FormControl, InputLabel, Select, MenuItem, Typography } from '@mui/mate
 import Status from '../../constants/status';
 import StatusColorCode from '../../constants/status-color';
 
-const StatusDropdown = ({taskStatus,handleStatusDropdown ,width,height}) => {
+const StatusDropdown = ({status,handleStatusDropdown ,width,height}) => {
 
-    const [currentStatus,setCurrentStatus] = useState(taskStatus)
+    const [currentStatus,setCurrentStatus] = useState(status)
     const handleDropdown = (e) =>{
         e.stopPropagation()
         setCurrentStatus(e.target.value)
@@ -24,7 +24,7 @@ const StatusDropdown = ({taskStatus,handleStatusDropdown ,width,height}) => {
             marginLeft: '10px',
         }}
         sx={{
-            backgroundColor: StatusColorCode[taskStatus],
+            backgroundColor: StatusColorCode[status],
         }}
         >
             <Select

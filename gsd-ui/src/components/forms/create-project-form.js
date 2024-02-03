@@ -18,20 +18,18 @@ import { useNavigate } from 'react-router-dom';
 import DateType from '../../constants/date-type';
 import Status from '../../constants/status';
 
-const CreateTaskForm = ({formActive,setFormActive}) => {
+const CreateProjectForm = ({formActive,setFormActive}) => {
 
 
     const navigate = useNavigate();
-    const [taskNumber,setTaskNumber] = useState('');
     const [title,setTitle] = useState('')
-    const [taskStatus,setTaskStatus] = useState(Status.None);
+    const [projectStatus,setProjectStatus] = useState(Status.None);
     const [startDate,setStartDate] = useState('');
     const [targetDate,setTargetDate] = useState('');
     const [description,setDescription] = useState('');
-    const [project,setProject] = useState('');
 
     const handleStatusDropdown = (status) =>{
-        setTaskStatus(status)
+        setProjectStatus(status)
     }
     const handleTargetDateChange = (date) => {
         setTargetDate(date);
@@ -45,35 +43,29 @@ const CreateTaskForm = ({formActive,setFormActive}) => {
     const handleSubmit = () =>{
       const formData = {
         'title': title,
-        'project': project,
-        'status': taskStatus,
+        'status': projectStatus,
         'description': description,
         'start' : startDate,
         'target' : targetDate
       }
-      const url = 'http://127.0.0.1:5000/task';
+      const url = 'http://127.0.0.1:5000/project';
       fetch(url, {
-        method: 'POST', // Specify the HTTP method
+        method: 'POST',
         headers: {
-          'Content-Type': 'application/json' // Specify the content type as JSON
+          'Content-Type': 'application/json' 
         },
-        body: JSON.stringify(formData) // Convert the form data to JSON string
+        body: JSON.stringify(formData)
       })
         .then(response => {
-          // Check if the response is successful (status code 200-299)
-          debugger
           if (response.ok) {
-            // If successful, you can handle the response here
             console.log('Form data submitted successfully');
             handleFormClose(false)
             window.location.reload()
           } else {
-            // If not successful, throw an error
             throw new Error('Failed to submit form data');
           }
         })
         .catch(error => {
-          // Handle any errors that occurred during the fetch call
           console.error('Error:', error);
         });
     }
@@ -109,7 +101,7 @@ const CreateTaskForm = ({formActive,setFormActive}) => {
               height="40px"
             >
               <Typography variant="h5" marginLeft="5px" color="textSecondary">
-                T:
+                P:
               </Typography>
               <TextField
                 variant="outlined"
@@ -137,24 +129,8 @@ const CreateTaskForm = ({formActive,setFormActive}) => {
               alignContent="flex-start"
               alignItems="center"
             >
-              <TextField
-                variant="outlined"
-                label= "project"
-                placeholder="attach project..."
-                value={project}
-                onChange={(e) => {
-                  setProject(e.target.value);
-                }}
-                sx={{
-                  marginLeft: '30px',
-                  '& .MuiInputBase-root': {
-                    height: '40px', // Adjust the height of the input element
-                  },
-                  alignContent:'center'
-                }}
-              />
               <StatusDropdown
-                status={taskStatus}
+                status={projectStatus}
                 handleStatusDropdown={handleStatusDropdown}
               />
               <Box
@@ -223,4 +199,4 @@ const CreateTaskForm = ({formActive,setFormActive}) => {
   );
 };
 
-export default CreateTaskForm;
+export default CreateProjectForm;

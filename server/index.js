@@ -34,7 +34,6 @@ const taskRouter = require('./routes/task');
 app.use(express.json());
 app.use('/',userRouter);
 app.use('/tasks',tasksRouter);
-app.use('/tasks',tasksRouter);
 app.use('/projects',projectsRouter);
 app.use('/project',projectRouter);
 app.use('/search',searchRouter);

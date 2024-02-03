@@ -41,15 +41,17 @@ router.post('/', async (req, res) => {
         title: req.body.title,
         description: req.body.description,
         status: req.body.status,
-        owner: req.body.owner,        
+        start: req.body.start,
+        target: req.body.target
     }
-    console.log(data)
     const project = new Project(data);
 
     try {
         const newProject = await project.save();
+        console.log("successfully submit new project",newProject)
         res.status(201).json(newProject);
     } catch (error) {
+        console.log("Failed to add new project",error.message)
         res.status(400).json({ message: error.message });
     }
 });

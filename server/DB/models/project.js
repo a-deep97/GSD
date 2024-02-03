@@ -11,23 +11,16 @@ const projectSchema = new Schema({
     title: {
         type: String,
         required: true,
-        unique: false
     },
     description: {
         type:  String,
-        required: true,
         unique: false
     },
     status: {
         type: String,
         required: true,
-        unique: true
     },
-    owner: {
-        type: String,
-        required: true
-    },
-    createdAt: {
+    start: {
         type: Date,
         default : Date.now
     },
