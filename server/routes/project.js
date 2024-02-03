@@ -87,4 +87,22 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
+router.get('/search/:searchString', async (req, res) => {
+    const searchString = req.params.searchString;
+
+    try {
+        const projects = await Project.find({
+            $or: [
+                { projectId: { $regex: new RegExp(searchString,'i')}},
+                { title: { $regex: new RegExp(searchString, 'i') } },
+                { description: { $regex: new RegExp(searchString, 'i') } },
+            ]
+        });
+
+        res.json(projects);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 module.exports = router;

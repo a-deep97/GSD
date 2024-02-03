@@ -5,32 +5,22 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Box } from '@mui/material';
 import StatusDropdown from '../utilities/status-dropdown';
 import CustomDatePicker from '../utilities/date-picker';
+import ProjectInput from '../utilities/project-input';
 
-const useStyles = makeStyles((theme) => ({
-  modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  card: {
-    minWidth: 275,
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(2),
-  },
-  closeButton: {
-    position: 'absolute',
-    top: theme.spacing(1),
-    right: theme.spacing(1),
-  },
-}));
 
 const TaskView = ({ open, onClose,taskId ,task }) => {
 
-    const [openTaskView, setOpenTaskView] = useState(false);
+    const [openTaskView, setOpenTaskView] = useState(open);
     const [taskStatus,setTaskStatus] = useState(task.status);
     const [startDate,setStartDate] = useState(task.start);
     const [targetDate,setTargetDate] = useState(task.target);
+    const [projectId,setProjectId] = useState(task.projectId? task.projectId : null);
+    const [isProjectSearchActive ,setIsProjectSearchActive] = useState(false);
   
+    const handleOnclose = () =>{
+      setOpenTaskView(false)
+      onClose()
+    }
     const handleStatusDropdown = (currentStatus) =>{
       updateTaskDetails({
         'status': currentStatus
@@ -48,7 +38,41 @@ const TaskView = ({ open, onClose,taskId ,task }) => {
       updateTaskDetails({
         'target': date
       })
+  }
+  const handleProjectFieldClick = () =>{
+    setIsProjectSearchActive(true);
+  }
+  const handleProjectInput = (projectId) =>{
+    /**
+     * this method updates the project when selected 
+     * from the search component and 
+     */
+    const formData = {
+      'projectId': projectId,
+      }
+    const url = `http://127.0.0.1:5000/task/${taskId}`;
+    fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(response => {
+        if (response.ok) {
+          console.log('Form data submitted successfully');
+          setProjectId(projectId)
+          setIsProjectSearchActive(false)
+        } else {
+          throw new Error('Failed to submit form data');
+        }
+      })
+      .catch(error => {
+        // Handle any errors that occurred during the fetch call
+        console.error('Error:', error);
+      });
   } 
+
   const updateTaskDetails = (data) =>{
     const url = `http://localhost:5000/task/${taskId}`;
     fetch(url, {
@@ -66,6 +90,8 @@ const TaskView = ({ open, onClose,taskId ,task }) => {
       })
       .then(data => {
           console.log('Response:', data);
+          window.location.reload()
+          openTaskView(true)
       })
       .catch(error => {
           console.error('There was a problem with the fetch operation:', error);
@@ -73,21 +99,26 @@ const TaskView = ({ open, onClose,taskId ,task }) => {
     }
   return (
     <Modal
-      open={open}
-      onClose={onClose}
+      open={openTaskView}
       closeAfterTransition
       style={{
         'display': 'flex',
         'justify-content': 'center',
         'align-items': 'center'
       }}
+      slotProps={{
+        Backdrop : {
+          onClick: {onClose},
+          sx: { backgroundColor: 'rgba(0, 0, 0, 0.5)' }
+        }
+      }}
     >
-      <Fade in={open}>
+      <Fade in={openTaskView}>
         <Card  style={{
             width:'700px',
             height: '550px'
             }}>
-          <IconButton  onClick={onClose}>
+          <IconButton  onClick={handleOnclose}>
             <CloseIcon />
           </IconButton>
           <CardContent>
@@ -100,15 +131,25 @@ const TaskView = ({ open, onClose,taskId ,task }) => {
                 </Typography>
             </Box>
             <Box display='flex' marginTop={2} width='97%' flexDirection='row' alignContent='flex-start' alignItems='center'>
-                <Typography variant="body2" component="p" width='30%'
-                    sx={{ overflow: 'hidden', 
-                    textOverflow: 'ellipsis', 
-                    whiteSpace: 'nowrap' ,
-                    width: '30%'
-                }}
-                >
-                    {task && task.project}
-                </Typography>
+                {
+                  isProjectSearchActive?
+                  <ProjectInput currentValue = {projectId} setInputValue={handleProjectInput}/>:
+                  <Typography variant="h6" component="p" width='30%'
+                      sx={{ overflow: 'hidden', 
+                      textOverflow: 'ellipsis', 
+                      whiteSpace: 'nowrap' ,
+                      width: '200px',
+                      height: '40px',
+                      boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.75)',
+                      backgroundColor: 'rgba(0,0,0,0.5)',
+                      cursor: 'pointer',
+                      textAlign: 'center',
+                      }}
+                      onClick={handleProjectFieldClick}
+                    >
+                      { projectId ?  "P" + projectId : 'None'}
+                    </Typography>
+                }
                 <StatusDropdown status={taskStatus} handleStatusDropdown={handleStatusDropdown} width='30%' />
                 <Box marginLeft={2} display='flex' flexDirection='row' justifyContent='center' alignItems='center' width='50%'>
                     <Box marginLeft='5px' display='flex' flexDirection='column' alignContent='center' alignItems='flex-start'>

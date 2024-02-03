@@ -34,6 +34,7 @@ const TaskCard = ({taskId,task}) => {
     }
     const onTaskClose = () =>{
         setOpenTaskView(false);
+        window.location.reload()
     }
     const handleStatusDropdown = (currentStatus) =>{
         setTaskStatus(currentStatus)
@@ -102,13 +103,13 @@ const TaskCard = ({taskId,task}) => {
                         alignContent='flex-start' 
                         alignItems='center'
                     >
-                        <Typography variant="body2" component="p" width='50%'
+                        <Typography variant="subtitle" color='tertiary' component="p" width='50%'
                             sx={{ overflow: 'hidden', 
                             textOverflow: 'ellipsis', 
                             whiteSpace: 'nowrap' 
                         }}
                         >
-                            {task && task.project}
+                            {task.projectId ? "P" + task.projectId:'None'}
                         </Typography>
                         <StatusDropdown status={taskStatus} handleStatusDropdown={handleStatusDropdown}/>
                     </Box>

@@ -116,7 +116,7 @@ const CreateProjectForm = ({formActive,setFormActive}) => {
                   marginLeft: '30px',
                   width: '500px',
                   '& .MuiInputBase-root': {
-                    height: '40px', // Adjust the height of the input element
+                    height: '40px',
                   },
                   alignContent:'center'
                 }}

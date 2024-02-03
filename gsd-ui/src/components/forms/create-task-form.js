@@ -18,6 +18,7 @@ import CustomDatePicker from '../utilities/date-picker';
 import { useNavigate } from 'react-router-dom';
 import DateType from '../../constants/date-type';
 import Status from '../../constants/status';
+import ProjectInput from '../utilities/project-input';
 
 const CreateTaskForm = ({formActive,setFormActive}) => {
 
@@ -46,12 +47,13 @@ const CreateTaskForm = ({formActive,setFormActive}) => {
     const handleSubmit = () =>{
       const formData = {
         'title': title,
-        'project': project,
+        'projectId': project,
         'status': taskStatus,
         'description': description,
         'start' : startDate,
         'target' : targetDate
       }
+      debugger
       const url = 'http://127.0.0.1:5000/task';
       fetch(url, {
         method: 'POST', // Specify the HTTP method
@@ -138,22 +140,7 @@ const CreateTaskForm = ({formActive,setFormActive}) => {
               alignContent="flex-start"
               alignItems="center"
             >
-              <TextField
-                variant="outlined"
-                label= "project"
-                placeholder="attach project..."
-                value={project}
-                onChange={(e) => {
-                  setProject(e.target.value);
-                }}
-                sx={{
-                  marginLeft: '30px',
-                  '& .MuiInputBase-root': {
-                    height: '40px', // Adjust the height of the input element
-                  },
-                  alignContent:'center'
-                }}
-              />
+              <ProjectInput setInputValue = {setProject}  />
               <StatusDropdown
                 status={taskStatus}
                 handleStatusDropdown={handleStatusDropdown}
