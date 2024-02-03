@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardContent, Typography,MenuItem, Box, FormControl,InputLabel,Select } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
@@ -6,6 +6,7 @@ import TaskView from './task-view';
 import StatusDropdown from '../utilities/status-dropdown';
 import CustomDatePicker from '../utilities/date-picker';
 import DateType from '../../constants/date-type';
+import StatusColorCode from '../../constants/status-color';
 
 const useStyles = makeStyles({
   root: {
@@ -20,13 +21,15 @@ const useStyles = makeStyles({
   },
 });
 
-const TaskCard = () => {
+const TaskCard = ({taskId,task}) => {
     const classes = useStyles();
     const [openTaskView, setOpenTaskView] = useState(false);
-    const [taskStatus,setTaskStatus] = useState(null);
-    const [startDate,setStartDate] = useState(null);
-    const [targetDate,setTargetDate] = useState(null);
+    const [taskStatus,setTaskStatus] = useState(task.status);
+    const [startDate,setStartDate] = useState(task.start);
+    const [targetDate,setTargetDate] = useState(task.target);
 
+
+    const taskID = taskId
     const dummyTask = {
         title: 'Task Title',
         taskNumber: 'T001',
@@ -51,9 +54,17 @@ const TaskCard = () => {
     const handleStartDateChange = (date) =>{
         setStartDate(date)
     }
+
     return (
         <Box>
-            <Card style={{'margin':'5px'}} className={classes.root} variant="outlined" onClick={handleClick}>
+            <Card 
+                style={{'margin':'5px', width: '95%', height:'170px'}} 
+                variant="outlined" 
+                onClick={handleClick}
+                sx={{
+                    backgroundColor: 'rgba(0,0,0,0.2)',
+                }}
+            >
                 <CardContent>
                     <Box display='flex' flexDirection='row' alignItems='center' alignContent='flex-start'>
                         <Typography marginLeft='5px' color="textSecondary">

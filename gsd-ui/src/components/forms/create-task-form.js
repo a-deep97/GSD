@@ -14,10 +14,13 @@ import TextField from '@mui/material/TextField'
 import CloseIcon from '@mui/icons-material/Close';
 import StatusDropdown from '../utilities/status-dropdown';
 import CustomDatePicker from '../utilities/date-picker';
+import { useNavigate } from 'react-router-dom';
+import DateType from '../../constants/date-type';
 
 const CreateTaskForm = ({formActive,setFormActive}) => {
 
 
+    const navigate = useNavigate();
     const [taskNumber,setTaskNumber] = useState('');
     const [title,setTitle] = useState('')
     const [taskStatus,setTaskStatus] = useState('');
@@ -62,6 +65,7 @@ const CreateTaskForm = ({formActive,setFormActive}) => {
             // If successful, you can handle the response here
             console.log('Form data submitted successfully');
             handleFormClose(false)
+            window.location.reload()
           } else {
             // If not successful, throw an error
             throw new Error('Failed to submit form data');
@@ -169,8 +173,8 @@ const CreateTaskForm = ({formActive,setFormActive}) => {
                 >
                   <Typography variant="caption">start</Typography>
                   <CustomDatePicker
-                    Date={startDate}
                     handleDateChange={handleStartDateChange}
+                    dateType={DateType.START}
                   />
                 </Box>
                 <Box
@@ -183,8 +187,8 @@ const CreateTaskForm = ({formActive,setFormActive}) => {
                 >
                   <Typography variant="caption">target</Typography>
                   <CustomDatePicker
-                    Date={targetDate}
                     handleDateChange={handleTargetDateChange}
+                    dateType={DateType.TARGET}
                   />
                 </Box>
               </Box>

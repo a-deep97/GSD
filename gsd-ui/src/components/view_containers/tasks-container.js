@@ -13,7 +13,7 @@ const TasksContainer = () => {
     const [backlogTasks,setBacklogTasks] = useState([]);    
     useEffect(()=>{
         const fetchTasks = () =>{
-            fetch('https://api.example.com/data')
+            fetch('http://localhost:5000/tasks')
                 .then(response => {
                     if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -21,23 +21,40 @@ const TasksContainer = () => {
                     return response.json();
                 })
                 .then(data => {
+                    let none = [];
+                    let inProgress = [];
+                    let planned = [];
+                    let completed = [];
+                    let backlog = [];
+
+                    // Iterate through the fetched tasks and populate corresponding arrays
                     data.forEach(task => {
-                        if (task.status === Status.None) {
-                            setNoneTasks(prevTasks => [...prevTasks, task]);
+                        switch (task.status) {
+                            case Status.None:
+                                none.push(task);
+                                break;
+                            case Status.Progress:
+                                inProgress.push(task);
+                                break;
+                            case Status.Planned:
+                                planned.push(task);
+                                break;
+                            case Status.Completed:
+                                completed.push(task);
+                                break;
+                            case Status.Backlog:
+                                backlog.push(task);
+                                break;
+                            default:
+                                break;
                         }
-                        else if(task.status === Status.Progress) {
-                            setInProgressTasks(prevTasks => [...prevTasks, task]);
-                        }
-                        else if(task.status === Status.Planned) {
-                            setPlannedTasks(prevTasks => [...prevTasks, task]);
-                        }
-                        else if(task.status === Status.Backlog) {
-                            setBacklogTasks(prevTasks => [...prevTasks, task]);
-                        }
-                        else if(task.status === Status.Completed) {
-                            setCompletedTasks(prevTasks => [...prevTasks, task]);
-                        }
-                      });
+                    });
+
+                    setNoneTasks(none);
+                    setInProgressTasks(inProgress);
+                    setPlannedTasks(planned);
+                    setCompletedTasks(completed);
+                    setBacklogTasks(backlog);
                 })
                 .catch(error => {
                     console.error('There was a problem with the fetch operation:', error);
@@ -47,12 +64,19 @@ const TasksContainer = () => {
         fetchTasks()
     },[]);
     return (
-        <Box alignSelf='center' display='flex' flexDirection='row' alignContent='flex-start' alignItems='center'>
-                <TaskListContainer tasks={noneTasks} status={Status.None}/>
-                <TaskListContainer tasks = {plannedTasks} status={Status.Planned}/>
-                <TaskListContainer tasks = {inProgressTasks} status={Status.Progress}/>
-                <TaskListContainer tasks = {completedTasks} status={Status.Completed}/>
-                <TaskListContainer tasks = {backlogTasks} status={Status.Backlog}/>
+        <Box alignSelf='center' 
+            display='flex' 
+            flexDirection='row' 
+            alignContent='center' 
+            alignItems='flex-start' 
+            width={'97%'}
+            marginTop={3}
+        >
+            <TaskListContainer tasks={noneTasks} status={Status.None}/>
+            <TaskListContainer tasks = {plannedTasks} status={Status.Planned}/>
+            <TaskListContainer tasks = {inProgressTasks} status={Status.Progress}/>
+            <TaskListContainer tasks = {completedTasks} status={Status.Completed}/>
+            <TaskListContainer tasks = {backlogTasks} status={Status.Backlog}/>
         </Box>
     );
 };
