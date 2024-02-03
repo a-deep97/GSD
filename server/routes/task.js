@@ -37,7 +37,7 @@ router.post('/', async (req, res) => {
 
     const unique_id = await generateUniqueID();
     const data = {
-        taskId: String(unique_id),
+        taskId: "T" + String(unique_id),
         title: req.body.title,
         projectId: req.body.projectId,
         description: req.body.description,

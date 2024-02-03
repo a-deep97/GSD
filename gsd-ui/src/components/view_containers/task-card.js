@@ -87,7 +87,7 @@ const TaskCard = ({taskId,task}) => {
                 <CardContent>
                     <Box display='flex' flexDirection='row' alignItems='center' alignContent='flex-start'>
                         <Typography marginLeft='5px' color="textSecondary">
-                            T{taskId}
+                            {taskId}
                         </Typography>
                         <Typography marginLeft='10px' variant="subtitle" color='primary'
                             sx={{ overflow: 'hidden', 
@@ -109,7 +109,7 @@ const TaskCard = ({taskId,task}) => {
                             whiteSpace: 'nowrap' 
                         }}
                         >
-                            {task.projectId ? "P" + task.projectId:'None'}
+                            {task.projectId ?task.projectId:'None'}
                         </Typography>
                         <StatusDropdown status={taskStatus} handleStatusDropdown={handleStatusDropdown}/>
                     </Box>

@@ -86,7 +86,7 @@ const ProjectCard = ({projectId,project}) => {
                 <CardContent>
                     <Box display='flex' flexDirection='row' alignItems='center' alignContent='flex-start'>
                         <Typography marginLeft='5px' color="textSecondary">
-                            P{projectId}
+                            {projectId}
                         </Typography>
                         <Typography marginLeft='10px' variant="subtitle" color='primary'
                             sx={{ overflow: 'hidden', 

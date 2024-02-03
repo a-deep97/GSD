@@ -124,7 +124,7 @@ const TaskView = ({ open, onClose,taskId ,task }) => {
           <CardContent>
           <Box display='flex' flexDirection='row' alignItems='center' alignContent='flex-start'>
                 <Typography variant='h4' marginLeft='5px' color="textSecondary">
-                    T{taskId}
+                    {taskId}
                 </Typography>
                 <Typography marginLeft='10px' variant="h6" color='primary'>
                     { task && task.title}
@@ -147,7 +147,7 @@ const TaskView = ({ open, onClose,taskId ,task }) => {
                       }}
                       onClick={handleProjectFieldClick}
                     >
-                      { projectId ?  "P" + projectId : 'None'}
+                      { projectId ?projectId : 'None'}
                     </Typography>
                 }
                 <StatusDropdown status={taskStatus} handleStatusDropdown={handleStatusDropdown} width='30%' />

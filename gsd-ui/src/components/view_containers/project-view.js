@@ -76,7 +76,7 @@ const ProjectView = ({ open, onClose,projectId, project }) => {
           <CardContent>
             <Box display='flex' flexDirection='row' alignItems='center' alignContent='flex-start'>
                 <Typography variant='h4' marginLeft='5px' color="textSecondary">
-                    P{projectId}
+                    {projectId}
                 </Typography>
                 <Typography marginLeft='10px' variant="h6" color='primary'>
                     { project && project.title}
