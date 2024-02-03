@@ -24,14 +24,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TaskView = ({ open, onClose,taskId, task }) => {
+const TaskView = ({ open, onClose,taskId ,task }) => {
 
     const [openTaskView, setOpenTaskView] = useState(false);
     const [taskStatus,setTaskStatus] = useState(task.status);
     const [startDate,setStartDate] = useState(task.start);
     const [targetDate,setTargetDate] = useState(task.target);
-    
-    
+  
     const handleStatusDropdown = (currentStatus) =>{
       updateTaskDetails({
         'status': currentStatus
@@ -39,25 +38,25 @@ const TaskView = ({ open, onClose,taskId, task }) => {
       window.location.reload()
     }
     const handleTargetDateChange = (date) => {
-        setTargetDate(date);
-        updateTaskDetails({
-          'start': date
-        })
-    }
-    const handleStartDateChange = (date) =>{
-        setStartDate(date)
-        updateTaskDetails({
-          'target': date
-        })
-    } 
-    const updateTaskDetails = (data) =>{
-      const url = `http://localhost:5000/task/${taskId}`;
-      fetch(url, {
-          method: 'PUT',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data)
+      setTargetDate(date);
+      updateTaskDetails({
+        'start': date
+      })
+  }
+  const handleStartDateChange = (date) =>{
+      setStartDate(date)
+      updateTaskDetails({
+        'target': date
+      })
+  } 
+  const updateTaskDetails = (data) =>{
+    const url = `http://localhost:5000/task/${taskId}`;
+    fetch(url, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
       })
       .then(response => {
           if (!response.ok) {
@@ -71,7 +70,7 @@ const TaskView = ({ open, onClose,taskId, task }) => {
       .catch(error => {
           console.error('There was a problem with the fetch operation:', error);
       });
-  }
+    }
   return (
     <Modal
       open={open}
@@ -92,7 +91,7 @@ const TaskView = ({ open, onClose,taskId, task }) => {
             <CloseIcon />
           </IconButton>
           <CardContent>
-            <Box display='flex' flexDirection='row' alignItems='center' alignContent='flex-start'>
+          <Box display='flex' flexDirection='row' alignItems='center' alignContent='flex-start'>
                 <Typography variant='h4' marginLeft='5px' color="textSecondary">
                     T{taskId}
                 </Typography>
@@ -100,12 +99,18 @@ const TaskView = ({ open, onClose,taskId, task }) => {
                     { task && task.title}
                 </Typography>
             </Box>
-            <Box display='flex' marginTop={2} width={700} flexDirection='row' alignContent='flex-start' alignItems='center'>
-                <Typography variant="h6" component="p" width='30%'>
+            <Box display='flex' marginTop={2} width='97%' flexDirection='row' alignContent='flex-start' alignItems='center'>
+                <Typography variant="body2" component="p" width='30%'
+                    sx={{ overflow: 'hidden', 
+                    textOverflow: 'ellipsis', 
+                    whiteSpace: 'nowrap' ,
+                    width: '30%'
+                }}
+                >
                     {task && task.project}
                 </Typography>
-                <StatusDropdown taskStatus={taskStatus} handleStatusDropdown={handleStatusDropdown} width='30%' />
-                <Box marginLeft={2} display='flex' flexDirection='row' justifyContent='center' alignItems='center'>
+                <StatusDropdown status={taskStatus} handleStatusDropdown={handleStatusDropdown} width='30%' />
+                <Box marginLeft={2} display='flex' flexDirection='row' justifyContent='center' alignItems='center' width='50%'>
                     <Box marginLeft='5px' display='flex' flexDirection='column' alignContent='center' alignItems='flex-start'>
                         <Typography variant='caption'>
                             start

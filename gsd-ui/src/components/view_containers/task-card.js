@@ -29,16 +29,6 @@ const TaskCard = ({taskId,task}) => {
     const [startDate,setStartDate] = useState(task.start);
     const [targetDate,setTargetDate] = useState(task.target);
 
-    const taskID = taskId
-    const dummyTask = {
-        title: 'Task Title',
-        taskNumber: 'T001',
-        status: 'In Progress',
-        target: '2024-12-31',
-        startDate: '2024-01-01',
-        project: 'Project Name',
-        description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.'
-      };
     const handleClick = () =>{
         setOpenTaskView(true);
     }
@@ -120,7 +110,7 @@ const TaskCard = ({taskId,task}) => {
                         >
                             {task && task.project}
                         </Typography>
-                        <StatusDropdown taskStatus={taskStatus} handleStatusDropdown={handleStatusDropdown}/>
+                        <StatusDropdown status={taskStatus} handleStatusDropdown={handleStatusDropdown}/>
                     </Box>
                     <Box display='flex' flexDirection='row' justifyContent='center' alignItems='center'>
                         <CustomDatePicker Date={startDate} handleDateChange={handleTargetDateChange} dateType={DateType.START}/>

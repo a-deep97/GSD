@@ -31,7 +31,7 @@ const StatusDropdown = ({status,handleStatusDropdown ,width,height}) => {
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={currentStatus}
-                label='status'
+                label={currentStatus}
                 onChange={(e) => (handleDropdown(e))}
                 onClick={(e) =>{handleClick(e)}}
                 style={{

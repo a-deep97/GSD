@@ -10,6 +10,7 @@ import {
   Button,
 } from '@mui/material';
 
+import dayjs from 'dayjs';
 import TextField from '@mui/material/TextField'
 import CloseIcon from '@mui/icons-material/Close';
 import StatusDropdown from '../utilities/status-dropdown';
@@ -24,8 +25,8 @@ const CreateProjectForm = ({formActive,setFormActive}) => {
     const navigate = useNavigate();
     const [title,setTitle] = useState('')
     const [projectStatus,setProjectStatus] = useState(Status.None);
-    const [startDate,setStartDate] = useState('');
-    const [targetDate,setTargetDate] = useState('');
+    const [startDate,setStartDate] = useState(dayjs());
+    const [targetDate,setTargetDate] = useState(dayjs());
     const [description,setDescription] = useState('');
 
     const handleStatusDropdown = (status) =>{
