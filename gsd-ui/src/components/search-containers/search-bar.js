@@ -14,7 +14,6 @@ const SearchBar = ({onSearch}) => {
     const [suggestions, setSuggestions] = useState([])
 
     const fetchSuggestions = (input) => {
-        debugger
         fetch(`http://localhost:5000/search/suggestions/${input}`)
           .then(response => {
             if (response.ok) {
@@ -42,15 +41,23 @@ const SearchBar = ({onSearch}) => {
     };
 
     const handleSuggestionClick = (suggestion) => {
-        setSearchText(suggestion.projectId);
+        debugger
+        setSearchText(suggestion);
         setSuggestions([]);
     };
     const handleSearch = () => {
+        setSuggestions([]);
         onSearch(searchText);
     };
 
   return (
-    <Box>
+    <Box sx={{
+        display:'flex',
+        flexDirection: 'column',
+        alignItems:'center',
+        alignSelf: 'center',
+        width:'500px',
+    }}>
         <TextField
             variant="outlined"
             placeholder="Search"
@@ -67,19 +74,40 @@ const SearchBar = ({onSearch}) => {
             }}
         />
         {suggestions.length > 0 && (
-            <Box sx={{ position: 'relative' }}>
-            <List sx={{ position: 'absolute', width: '100%', bgcolor: 'background.paper', zIndex: 1 }}>
-                {suggestions.map((suggestion) => (
-                <React.Fragment key={suggestion.id}>
-                    <ListItem button onClick={() => handleSuggestionClick(suggestion)}>
-                    <ListItemText primary={suggestion.title} />
-                    </ListItem>
-                    <Divider />
-                </React.Fragment>
-                ))}
-            </List>
+            <Box 
+                sx={{ 
+                    position: 'relative', 
+                    width: '100%',
+                }}
+            >
+                <List sx={{ 
+                    position: 'absolute', 
+                    bgcolor: 'background.paper',
+                    width: '100%', 
+                    display: 'flex',
+                    alignItems: 'center',
+                    flexDirection: 'column',
+                    zIndex: 1 
+                }}>
+                    {suggestions.map((suggestion) => (
+                    <React.Fragment key={suggestion.id}>
+                        <ListItem
+                             sx={{
+                                backgroundColor: 'rgba(0,0,0,0.2)',
+                                width: '80%',
+                                '&:hover': {
+                                    backgroundColor: 'rgba(0,0,0,0.4)',
+                                },
+                             }} 
+                             onClick={() => handleSuggestionClick(suggestion)}>
+                            <ListItemText primary={suggestion} />
+                        </ListItem>
+                        <Divider />
+                    </React.Fragment>
+                    ))}
+                </List>
             </Box>
-        )}  
+        )}
     </Box>
   );
 };

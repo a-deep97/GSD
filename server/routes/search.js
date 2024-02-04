@@ -23,7 +23,7 @@ router.get('/suggestions/:searchString' ,async(req,res) => {
       });
 
       const taskTitles = tasks.map(task => task.title);
-
+      const projectTitles = projects.map(project => project.title)
       const searchSuggestions = [...projectTitles, ...taskTitles];
       console.log(searchSuggestions)
       res.json(searchSuggestions);

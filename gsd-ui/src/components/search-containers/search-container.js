@@ -31,9 +31,26 @@ const SearchContainer = () => {
 
     }
     return (
-        <Box width='100%'>
-            <SearchBar onSearch ={handleSearch}/>
-            <FilterBar/>
+        <Box
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                alignContent: 'center',
+                width: '100%',
+                alignSelf: 'center'
+            }}
+        >   
+            <Box sx={{
+                width: '90%',
+                display:'flex',
+                flexDirection: 'row',
+                alignContent: 'center',
+                alignItems: 'center'
+            }}>
+                <FilterBar/>
+                <SearchBar onSearch ={handleSearch}/>
+            </Box>
             <SearchResults tasks={tasks} projects = {projects}/>
         </Box>
     );
