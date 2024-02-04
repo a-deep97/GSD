@@ -39,7 +39,7 @@ const ProjectInput = ({currentValue,setInputValue}) => {
   };
 
   const handleSuggestionClick = (suggestion) => {
-    setSearchInput("P"+ suggestion.projectId);
+    setSearchInput(suggestion.projectId);
     setInputValue(suggestion.projectId)
     setSuggestions([]);
   };
