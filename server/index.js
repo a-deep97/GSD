@@ -30,7 +30,6 @@ const projectRouter = require('./routes/project');
 const searchRouter = require('./routes/search');
 const taskRouter = require('./routes/task');
 
-
 app.use(express.json());
 app.use('/',userRouter);
 app.use('/tasks',tasksRouter);
@@ -40,9 +39,6 @@ app.use('/search',searchRouter);
 app.use('/task',taskRouter);
 
 
-app.get("/api",(req,res)=>{
-     res.json({"users":["1","2","3"]})
-})
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

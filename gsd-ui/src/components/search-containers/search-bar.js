@@ -14,7 +14,8 @@ const SearchBar = ({onSearch}) => {
     const [suggestions, setSuggestions] = useState([])
 
     const fetchSuggestions = (input) => {
-        fetch(`http://localhost:5000/search/${input}`)
+        debugger
+        fetch(`http://localhost:5000/search/suggestions/${input}`)
           .then(response => {
             if (response.ok) {
               return response.json();
