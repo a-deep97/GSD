@@ -56,12 +56,13 @@ const SearchBar = ({onSearch}) => {
         flexDirection: 'column',
         alignItems:'center',
         alignSelf: 'center',
-        width:'500px',
+        width:'400px',
     }}>
         <TextField
             variant="outlined"
             placeholder="Search"
             value={searchText}
+            width = '90%'
             onChange={handleInputChange}
             InputProps={{
                 endAdornment: (

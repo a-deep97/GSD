@@ -19,7 +19,7 @@ const SearchContainer = () => {
             throw new Error('Failed to fetch search results');
           })
           .then(data => {
-            console.log(data);
+            console.log("data",data);
             setProjects(data.projects);
             setTasks(data.tasks);
           })
@@ -42,8 +42,9 @@ const SearchContainer = () => {
             }}
         >   
             <Box sx={{
-                width: '90%',
+                width: '95%',
                 display:'flex',
+                padding:'10px',
                 flexDirection: 'row',
                 alignContent: 'center',
                 alignItems: 'center'
@@ -51,7 +52,7 @@ const SearchContainer = () => {
                 <FilterBar/>
                 <SearchBar onSearch ={handleSearch}/>
             </Box>
-            <SearchResults tasks={tasks} projects = {projects}/>
+            <SearchResults tasksData={tasks} projectsData = {projects}/>
         </Box>
     );
 };

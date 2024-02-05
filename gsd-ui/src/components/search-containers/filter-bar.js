@@ -1,14 +1,28 @@
 import React from 'react';
 import { Box } from '@mui/material';
+import FilterChip from '../utilities/filter-chip';
+import filterOptions from '../../constants/filter-options';
 
 const FilterBar = () => {
+
     return (
-        <Box sx={{
-            width: '1000px',
-            backgroundColor: 'blue'
-        }} >
-            hello
+        <Box 
+            container spacing={2} 
+            display='flex'
+            flexDirection='row'
+            alignContent='center'
+            alignItems='center'
+            width='90%'
+        >
+            {filterOptions.map((filter, index) => (
+                <Box item key={index}
+                    padding='10px'
+                >
+                    <FilterChip filter={filter} />
+                </Box>
+            ))}
         </Box>
+
     );
 };
 
