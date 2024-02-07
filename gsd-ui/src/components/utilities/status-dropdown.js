@@ -16,15 +16,12 @@ const StatusDropdown = ({status,handleStatusDropdown ,width,height}) => {
     }
     return (
         <FormControl style={{
-            width: width? width : '140px',
-            height: height ? height : '40px',
+            width: width? width : '120px',
+            height: height ? height : '35px',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
             marginLeft: '10px',
-        }}
-        sx={{
-            backgroundColor: StatusColorCode[status],
         }}
         >
             <Select
@@ -36,14 +33,21 @@ const StatusDropdown = ({status,handleStatusDropdown ,width,height}) => {
                 onClick={(e) =>{handleClick(e)}}
                 style={{
                     width: '100%',
-                    height: height ? height : '40px',
+                    height: height ? height : '30px',
                     paddingTop: '0',
                     paddingBottom: '0',
                     paddingLeft: '0',
                 }}
+                sx={{
+                    backgroundColor: StatusColorCode[status],
+                }}
                 >
-                <MenuItem value={Status.None}>
-                    <Typography variant='body'>
+                <MenuItem 
+                    value={Status.None}
+                >
+                    <Typography 
+                        variant='body'
+                    >
                         {Status.None}
                     </Typography>
                 </MenuItem>

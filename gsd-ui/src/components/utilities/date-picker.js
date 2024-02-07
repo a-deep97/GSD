@@ -27,6 +27,7 @@ const CustomDatePicker = ({Date,handleDateChange,dateType}) => {
                 defaultValue={ dateType === DateType.START? defaultCurrentDate : defaultTargetDate}
                 value={date}
                 onChange={(newDate) => {handleChange(newDate)}}
+                slotProps={{ textField: { size: 'small' } }}
                 />
             </LocalizationProvider>
         </Box>

@@ -91,10 +91,15 @@ const TaskCard = ({taskId,task}) => {
             >
                 <CardContent>
                     <Box display='flex' flexDirection='row' alignItems='center' alignContent='flex-start'>
-                        <Typography marginLeft='5px' color="textSecondary">
+                        <Typography marginLeft='5px' color="textSecondary"
+                            sx={{
+                                fontWeight: 'bold'
+                            }}
+                        >
                             {taskId}
                         </Typography>
-                        <Typography marginLeft='10px' variant="subtitle" color='primary'
+                        <Typography marginLeft='10px' 
+                            variant="subtitle" 
                             sx={{ overflow: 'hidden', 
                                 textOverflow: 'ellipsis', 
                                 whiteSpace: 'nowrap' 
@@ -121,16 +126,6 @@ const TaskCard = ({taskId,task}) => {
                     <Box display='flex' flexDirection='row' justifyContent='center' alignItems='center'>
                         <CustomDatePicker Date={startDate} handleDateChange={handleTargetDateChange} dateType={DateType.START}/>
                         <CustomDatePicker Date={targetDate} handleDateChange={handleStartDateChange} dateType={DateType.TARGET}/>
-                    </Box>
-                    <Box style={{
-                        height: '100px',
-                        textOverflow: 'ellipsis',
-                        }}
-                        marginTop={2}
-                    >
-                        <Typography variant='caption'>
-                            {task && task.description}
-                        </Typography>
                     </Box>
                 </CardContent>
             </Card>
