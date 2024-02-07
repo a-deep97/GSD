@@ -55,13 +55,12 @@ const SearchBar = ({onSearch}) => {
         flexDirection: 'column',
         alignItems:'center',
         alignSelf: 'center',
-        width:'400px',
+        width:'700px',
     }}>
         <TextField
             variant="outlined"
             placeholder="Search"
             value={searchText}
-            width = '90%'
             onChange={handleInputChange}
             InputProps={{
                 endAdornment: (
@@ -71,6 +70,9 @@ const SearchBar = ({onSearch}) => {
                     </IconButton>
                 </InputAdornment>
                 ),
+            }}
+            sx={{
+                width:'90%'
             }}
         />
         {suggestions.length > 0 && (
@@ -94,7 +96,7 @@ const SearchBar = ({onSearch}) => {
                         <ListItem
                              sx={{
                                 backgroundColor: 'rgba(0,0,0,0.2)',
-                                width: '80%',
+                                width: '100%',
                                 '&:hover': {
                                     backgroundColor: 'rgba(0,0,0,0.4)',
                                 },

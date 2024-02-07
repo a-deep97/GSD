@@ -9,10 +9,9 @@ const FilterBar = () => {
         <Box 
             container spacing={2} 
             display='flex'
-            flexDirection='row'
+            flexDirection='column'
             alignContent='center'
             alignItems='center'
-            width='90%'
         >
             {filterOptions.map((filter, index) => (
                 <Box item key={index}

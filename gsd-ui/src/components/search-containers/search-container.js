@@ -63,14 +63,21 @@ const SearchContainer = () => {
                 alignContent: 'center',
                 alignItems: 'center'
             }}>
-                <FilterBar/>
                 <SearchBar onSearch ={handleSearch}/>
             </Box>
-            {
+            <Box 
+              display='flex' 
+              flexDirection='row'
+              width='95%'
+
+              >
+              <FilterBar/>
+              {
               !isLoading?
               <SearchResults  tasksData={tasks} projectsData = {projects}/>:
               null
             }
+            </Box>
         </Box>
     );
 };

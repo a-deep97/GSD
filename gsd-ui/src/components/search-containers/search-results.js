@@ -14,12 +14,22 @@ const SearchResults = ({tasksData,projectsData}) => {
             padding='10px'
             display='flex'
             flexDirection='row'
-            alignContent='center'
-            alignItems='flex-start'            
+            alignContent='flex-start'
+            alignItems='flex-start'
+            sx={{
+                border: '2px solid rgba(50,50,50,0.5)',
+                borderRadius: '10px',
+                minHeight: '500px',
+                width:'90%'
+            }}            
         >
-            <TasksResult tasks= {tasks}/>:
             {
-                projectsData?
+                tasks?
+                <TasksResult tasks= {tasks}/>:
+                null
+            }
+            {
+                projects?
                 <ProjectsResult projects = {projects}/>:
                 null
             }
