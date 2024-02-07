@@ -41,9 +41,8 @@ const SearchBar = ({onSearch}) => {
     };
 
     const handleSuggestionClick = (suggestion) => {
-        debugger
-        setSearchText(suggestion);
         setSuggestions([]);
+        onSearch(suggestion)
     };
     const handleSearch = () => {
         setSuggestions([]);

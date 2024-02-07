@@ -19,6 +19,7 @@ function App() {
           <Route path='/projects' element={<ProjectsPage/>} />
           <Route path='/dashboard' element={<DashboardPage/>} />
           <Route path='/search' element={<SearchPage/>}/>
+          <Route path='/search/:searchtext' element={<SearchPage/>}/>
         </Routes>
       </BrowserRouter>
     </div>

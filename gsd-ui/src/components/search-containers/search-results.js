@@ -8,10 +8,6 @@ const SearchResults = ({tasksData,projectsData}) => {
     const [tasks,setTasks] = useState(tasksData);
     const [projects,setProjects] = useState(projectsData);
 
-    useEffect(()=>{
-        console.log('tasks',tasks)
-        console.log('projects',projects)
-    },[]);
     return (
         <Box 
             fullWidth
@@ -19,10 +15,14 @@ const SearchResults = ({tasksData,projectsData}) => {
             display='flex'
             flexDirection='row'
             alignContent='center'
-            alignItems='center'            
+            alignItems='flex-start'            
         >
-            <TasksResult tasks= {tasks}/>
-            <ProjectsResult projects = {projects}/>
+            <TasksResult tasks= {tasks}/>:
+            {
+                projectsData?
+                <ProjectsResult projects = {projects}/>:
+                null
+            }
         </Box>
     );
 };

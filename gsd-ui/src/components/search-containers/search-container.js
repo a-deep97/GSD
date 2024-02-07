@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState,useRef, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Box } from '@mui/material';
 
 import SearchBar from './search-bar';
@@ -7,11 +8,19 @@ import SearchResults from './search-results';
 
 const SearchContainer = () => {
 
+    const navigate = useNavigate();
+    const { searchtext } = useParams(); 
+    const [isLoading,setIsloading] = useState(true)
     const [projects,setProjects] = useState([]);
     const [tasks , setTasks] = useState([]);
 
-    const handleSearch =  (searchtext) =>{
-        fetch(`http://localhost:5000/search/${searchtext}`)
+    useEffect(()=>{
+      if(tasks||projects){
+        setIsloading(false)
+      }
+    },[tasks,projects])
+    const fetchData = (searchtext) =>{
+      fetch(`http://localhost:5000/search/${searchtext}`)
           .then(response => {
             if (response.ok) {
               return response.json();
@@ -27,9 +36,14 @@ const SearchContainer = () => {
             console.error('Error:', error);
           });
     }
+    const handleSearch =  (searchtext) =>{
+        setIsloading(true)
+        fetchData(searchtext) 
+    }
     const handleFilter = () =>{
 
     }
+
     return (
         <Box
             sx={{
@@ -52,7 +66,11 @@ const SearchContainer = () => {
                 <FilterBar/>
                 <SearchBar onSearch ={handleSearch}/>
             </Box>
-            <SearchResults tasksData={tasks} projectsData = {projects}/>
+            {
+              !isLoading?
+              <SearchResults  tasksData={tasks} projectsData = {projects}/>:
+              null
+            }
         </Box>
     );
 };

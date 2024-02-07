@@ -25,10 +25,15 @@ const useStyles = makeStyles({
 const ProjectCard = ({projectId,project}) => {
 
     const [openProjectView, setOpenProjectView] = useState(false);
-    const [projectStatus,setProjectStatus] = useState(project.status);
-    const [startDate,setStartDate] = useState(project.start);
-    const [targetDate,setTargetDate] = useState(project.target);
+    const [projectStatus,setProjectStatus] = useState();
+    const [startDate,setStartDate] = useState();
+    const [targetDate,setTargetDate] = useState();
 
+    useEffect(()=>{
+        setProjectStatus(project.status)
+        setStartDate(project.start)
+        setTargetDate(project.target)   
+    })
     const handleClick = () =>{
         setOpenProjectView(true);
     }
@@ -77,7 +82,7 @@ const ProjectCard = ({projectId,project}) => {
         });
     }
     return (
-        <Box>
+        <Box sx={{width:'100%'}}>
             <Card 
                 style={{'margin':'5px', width: '95%', height:'170px'}} 
                 variant="outlined" 

@@ -17,7 +17,6 @@ const CustomDatePicker = ({Date,handleDateChange,dateType}) => {
         e.stopPropagation()
     }
     const handleChange = (newDate) =>{
-        debugger
         handleDateChange(newDate);
         setDate(newDate);
     } 

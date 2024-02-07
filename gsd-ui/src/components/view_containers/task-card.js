@@ -29,6 +29,11 @@ const TaskCard = ({taskId,task}) => {
     const [startDate,setStartDate] = useState(task.start);
     const [targetDate,setTargetDate] = useState(task.target);
 
+    useEffect(()=>{
+        setTaskStatus(task.status)
+        setStartDate(task.start)
+        setTargetDate(task.target)
+    });
     const handleClick = () =>{
         setOpenTaskView(true);
     }

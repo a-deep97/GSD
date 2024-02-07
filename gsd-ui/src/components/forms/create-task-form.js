@@ -53,25 +53,23 @@ const CreateTaskForm = ({formActive,setFormActive}) => {
         'start' : startDate,
         'target' : targetDate
       }
-      debugger
+
       const url = 'http://127.0.0.1:5000/task';
       fetch(url, {
-        method: 'POST', // Specify the HTTP method
+        method: 'POST', 
         headers: {
-          'Content-Type': 'application/json' // Specify the content type as JSON
+          'Content-Type': 'application/json' 
         },
-        body: JSON.stringify(formData) // Convert the form data to JSON string
+        body: JSON.stringify(formData) 
       })
         .then(response => {
-          // Check if the response is successful (status code 200-299)
-          debugger
+          
           if (response.ok) {
-            // If successful, you can handle the response here
+            
             console.log('Form data submitted successfully');
             handleFormClose(false)
             window.location.reload()
           } else {
-            // If not successful, throw an error
             throw new Error('Failed to submit form data');
           }
         })
