@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormControl, InputLabel, Select, MenuItem, Typography } from '@mui/material';
 import Status from '../../constants/status';
 import StatusColorCode from '../../constants/status-color';
@@ -6,6 +6,7 @@ import StatusColorCode from '../../constants/status-color';
 const StatusDropdown = ({status,handleStatusDropdown ,width,height}) => {
 
     const [currentStatus,setCurrentStatus] = useState(status)
+
     const handleDropdown = (e) =>{
         e.stopPropagation()
         setCurrentStatus(e.target.value)

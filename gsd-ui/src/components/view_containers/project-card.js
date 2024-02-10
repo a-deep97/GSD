@@ -25,9 +25,9 @@ const useStyles = makeStyles({
 const ProjectCard = ({projectId,project}) => {
 
     const [openProjectView, setOpenProjectView] = useState(false);
-    const [projectStatus,setProjectStatus] = useState();
-    const [startDate,setStartDate] = useState();
-    const [targetDate,setTargetDate] = useState();
+    const [projectStatus,setProjectStatus] = useState(project.status);
+    const [startDate,setStartDate] = useState(project.start);
+    const [targetDate,setTargetDate] = useState(project.target);
 
     useEffect(()=>{
         setProjectStatus(project.status)
