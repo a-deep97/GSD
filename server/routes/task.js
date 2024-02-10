@@ -4,6 +4,8 @@ const router = express.Router();
 
 const Task = require('../DB/models/task');
 const generateUniqueNumber = require('../lib/unique_id');
+const actionType = require('../lib/constants/action_type');
+const {addActivity} = require('./activity');
 
 // Gets a task content
 router.get('/:id', async (req, res) => {
@@ -45,12 +47,17 @@ router.post('/', async (req, res) => {
         start: req.body.start,
         target: req.body.target
     }
-    console.log(data)
     const task = new Task(data);
 
     try {
         const newTask = await task.save();
-        res.status(201).json(newTask);
+        
+        await addActivity(
+            null,
+            data.taskId,
+            [actionType.NEW_TASK])
+        
+            res.status(201).json(newTask);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -64,9 +71,36 @@ router.put('/:id', async (req, res) => {
             req.body,
             {new: true}
         );
+        // Adding activities for the updated task
+        actions=[]
+        Object.entries(req.body).forEach(([key,value])=>{
+            switch(key){
+                case 'status': 
+                    actions.push(actionType.UPDATED_STATUS);
+                    break;
+                case 'start': 
+                    actions.push(actionType.UPDATED_START);
+                    break;
+                case 'target': 
+                    actions.push(actionType.UPDATED_TARGET);
+                    break;
+                case 'description': 
+                    actions.push(actionType.UPDATED_DESCRIPTION);
+                    break;
+                case 'title': 
+                    activities.push(actionType.UPDATED_TITLE);
+                    break;
+            }
+        });
         if (!updatedTask) {
             return res.status(404).json({ message: 'Task not found' });
         }
+
+        await addActivity(
+            null,
+            req.params.id,
+            actions)
+
         res.json(updatedTask);
     } catch (error) {
         res.status(400).json({ message: error.message });

@@ -29,9 +29,11 @@ const projectsRouter = require('./routes/projects');
 const projectRouter = require('./routes/project');
 const searchRouter = require('./routes/search');
 const taskRouter = require('./routes/task');
+const {router:activityRouter} = require('./routes/activity');
 
 app.use(express.json());
 app.use('/',userRouter);
+app.use('/activities',activityRouter);
 app.use('/tasks',tasksRouter);
 app.use('/projects',projectsRouter);
 app.use('/project',projectRouter);

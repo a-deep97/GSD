@@ -3,7 +3,9 @@ const express = require('express');
 const router = express.Router();
 
 const Project = require('../DB/models/project');
+const {addActivity} = require('./activity');
 const generateUniqueNumber = require('../lib/unique_id');
+const actionType = require('../lib/constants/action_type');
 
 // Gets a project content
 router.get('/:id', async (req, res) => {
@@ -48,7 +50,11 @@ router.post('/', async (req, res) => {
 
     try {
         const newProject = await project.save();
-        console.log("successfully submit new project",newProject)
+        console.log("successfully submited new project",newProject)
+        await addActivity(
+            data.projectId,
+            null,
+            [actionType.NEW_PROJECT])
         res.status(201).json(newProject);
     } catch (error) {
         console.log("Failed to add new project",error.message)
@@ -64,9 +70,35 @@ router.put('/:id', async (req, res) => {
             req.body,
             {new: true}
         );
+         // Adding activities for the updated project
+        const actions=[]
+        Object.entries(req.body).forEach(([key,value])=>{
+            switch(key){
+                case 'status': 
+                    actions.push(actionType.UPDATED_STATUS);
+                    break;
+                case 'start': 
+                    actions.push(actionType.UPDATED_START);
+                    break;
+                case 'target': 
+                    actions.push(actionType.UPDATED_TARGET);
+                    break;
+                case 'description': 
+                    actions.push(actionType.UPDATED_DESCRIPTION);
+                    break;
+                case 'title': 
+                    activities.push(actionType.UPDATED_TITLE);
+                    break;
+            }
+        });
+        
         if (!updatedProject) {
             return res.status(404).json({ message: 'Project not found' });
         }
+        await addActivity(
+            req.params.id,
+            null,
+            actions)
         res.json(updatedProject);
     } catch (error) {
         res.status(400).json({ message: error.message });
