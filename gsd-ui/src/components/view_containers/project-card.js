@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Card, CardContent, Typography,MenuItem, Box, FormControl,InputLabel,Select } from '@mui/material';
+import { Card, CardContent, Typography,MenuItem, Box, FormControl,InputLabel,Select,IconButton } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import {ExpandLess,ExpandMore} from '@mui/icons-material';
 
 import ProjectView from './project-view';
 import StatusDropdown from '../utilities/status-dropdown';
@@ -24,6 +25,7 @@ const useStyles = makeStyles({
 
 const ProjectCard = ({projectId,project}) => {
 
+    const [expanded,setExpanded] = useState(false);
     const [openProjectView, setOpenProjectView] = useState(false);
     const [projectStatus,setProjectStatus] = useState(project.status);
     const [startDate,setStartDate] = useState(project.start);
@@ -59,6 +61,10 @@ const ProjectCard = ({projectId,project}) => {
             'target': date
         })
     }
+    const handleExpansion = (e) =>{
+        e.stopPropagation();
+        setExpanded(!expanded);
+    }
     const updateProjectDetails = (data) =>{
         const url = `http://localhost:5000/project/${projectId}`;
         fetch(url, {
@@ -82,13 +88,30 @@ const ProjectCard = ({projectId,project}) => {
         });
     }
     return (
-        <Box sx={{width:'100%'}}>
+        <Box sx={{
+            width: '100%',
+            display: 'flex',
+            alignContent: 'center',
+            alignItems: 'center',       
+            justifyContent: 'center' 
+        }}>
             <Card 
-                style={{'margin':'5px', width: '95%', height:'170px'}} 
+                sx={{
+                    width: '95%' , 
+                    padding:'0px',
+                }} 
                 variant="outlined" 
                 onClick={handleClick}
             >
-                <CardContent>
+                <CardContent
+                    display='flex' 
+                    flexDirection='column'
+                    sx={{
+                        paddingBottom:'0px',
+                        height: expanded ? '120px' : '70px',
+                        transition: 'height 0.5s ease-in-out'
+                    }}
+                >
                     <Box display='flex' flexDirection='row' alignItems='center' alignContent='flex-start'>
                         <Typography marginLeft='5px' color="textSecondary">
                             {projectId}
@@ -117,20 +140,25 @@ const ProjectCard = ({projectId,project}) => {
                         </Typography>
                         <StatusDropdown status={projectStatus} handleStatusDropdown={handleStatusDropdown}/>
                     </Box>
-                    <Box display='flex' flexDirection='row' justifyContent='center' alignItems='center'>
-                        <CustomDatePicker Date={startDate} handleDateChange={handleTargetDateChange} dateType={DateType.START}/>
-                        <CustomDatePicker Date={targetDate} handleDateChange={handleStartDateChange} dateType={DateType.TARGET}/>
-                    </Box>
-                    <Box style={{
-                        height: '100px',
-                        textOverflow: 'ellipsis',
+                    <IconButton 
+                        onClick={handleExpansion}
+                        sx={{
+                            width: '90%',
+                            padding: '0px'
                         }}
-                        marginTop={2}
                     >
-                        <Typography variant='caption'>
-                            {project && project.description}
-                        </Typography>
-                    </Box>
+                        {
+                            expanded? <ExpandLess/> : <ExpandMore/>
+                        }
+                    </IconButton>
+                    {
+                        expanded?
+                        <Box display='flex' flexDirection='row' justifyContent='center' alignItems='center'>
+                            <CustomDatePicker Date={startDate} handleDateChange={handleTargetDateChange} dateType={DateType.START}/>
+                            <CustomDatePicker Date={targetDate} handleDateChange={handleStartDateChange} dateType={DateType.TARGET}/>
+                        </Box>:
+                        null
+                    }
                 </CardContent>
             </Card>
             {

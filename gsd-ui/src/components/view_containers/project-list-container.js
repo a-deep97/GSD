@@ -24,15 +24,12 @@ const ProjectListContainer = ({projects,status}) => {
             alignItems='center'
             alignContent='flex-start'
             >
-            <Box sx={{ 
-                borderBottom: '1px solid #ccc', 
-                marginBottom: '10px', 
-                paddingBottom: '5px', 
-                width: '100%',        
-                }}
-            >
-            </Box>
-            <Box paddingTop='5px' display='flex' flexDirection='column' alignContent='flex-start' alignItems='center'>
+            <Box paddingTop='5px' 
+                display='flex' 
+                width='100%'
+                flexDirection='column' 
+                alignContent='flex-start' 
+                alignItems='center'>
                 {renderCards()}
             </Box>
         </Box>

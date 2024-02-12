@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Card, CardContent, Typography,MenuItem, Box, FormControl,InputLabel,Select } from '@mui/material';
+import { Card, CardContent, Typography,MenuItem, Box, FormControl,InputLabel,Select, IconButton } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import {ExpandLess,ExpandMore} from '@mui/icons-material';
 
 import TaskView from './task-view';
 import StatusDropdown from '../utilities/status-dropdown';
@@ -24,6 +25,7 @@ const useStyles = makeStyles({
 
 const TaskCard = ({taskId,task}) => {
 
+    const [expanded,setExpanded] = useState(false);
     const [openTaskView, setOpenTaskView] = useState(false);
     const [taskStatus,setTaskStatus] = useState(task.status);
     const [startDate,setStartDate] = useState(task.start);
@@ -60,6 +62,10 @@ const TaskCard = ({taskId,task}) => {
             'target': date
         })
     }
+    const handleExpansion = (e) =>{
+        e.stopPropagation();
+        setExpanded(!expanded);
+    }
     const updateTaskDetails = (data) =>{
         const url = `http://localhost:5000/task/${taskId}`;
         fetch(url, {
@@ -83,13 +89,29 @@ const TaskCard = ({taskId,task}) => {
         });
     }
     return (
-        <Box>
+        <Box sx={{
+            width: '100%',
+            display: 'flex',
+            alignContent: 'center',
+            alignItems: 'center',       
+            justifyContent: 'center' 
+        }}>
             <Card 
-                style={{'margin':'5px', width: '95%', height:'170px'}} 
+                sx={{
+                    width: '95%',
+                    padding:'0px',
+                }} 
                 variant="outlined" 
                 onClick={handleClick}
             >
-                <CardContent>
+                <CardContent 
+                    display='flex' 
+                    flexDirection='column'
+                    sx={{
+                        height: expanded ? '120px' : '70px',
+                        transition: 'height 0.5s ease-in-out'
+                    }}
+                >
                     <Box display='flex' flexDirection='row' alignItems='center' alignContent='flex-start'>
                         <Typography marginLeft='5px' color="textSecondary"
                             sx={{
@@ -123,10 +145,25 @@ const TaskCard = ({taskId,task}) => {
                         </Typography>
                         <StatusDropdown status={taskStatus} handleStatusDropdown={handleStatusDropdown}/>
                     </Box>
-                    <Box display='flex' flexDirection='row' justifyContent='center' alignItems='center'>
-                        <CustomDatePicker Date={startDate} handleDateChange={handleTargetDateChange} dateType={DateType.START}/>
-                        <CustomDatePicker Date={targetDate} handleDateChange={handleStartDateChange} dateType={DateType.TARGET}/>
-                    </Box>
+                    <IconButton 
+                        onClick={handleExpansion}
+                        sx={{
+                            width: '90%',
+                            padding: '0px'
+                        }}
+                    >
+                        {
+                            expanded? <ExpandLess/> : <ExpandMore/>
+                        }
+                    </IconButton>
+                    {
+                        expanded?
+                        <Box display='flex' flexDirection='row' justifyContent='center' alignItems='center'>
+                            <CustomDatePicker Date={startDate} handleDateChange={handleTargetDateChange} dateType={DateType.START}/>
+                            <CustomDatePicker Date={targetDate} handleDateChange={handleStartDateChange} dateType={DateType.TARGET}/>
+                        </Box>:
+                        null
+                    }
                 </CardContent>
             </Card>
             {
