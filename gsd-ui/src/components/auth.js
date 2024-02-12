@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import Login from './forms/login';
 import { Box } from '@mui/material';
+import Signup from './forms/signup';
+import { useParams } from 'react-router-dom';
 
 const AuthPage = () => {
-    const [signUpTrue,setSignUpTrue] = useState(false);
+    const {isSignup} = useParams();
     const authImage = require('../static/media/auth-img.jpg')
     return (
         <Box sx={{
@@ -20,7 +22,11 @@ const AuthPage = () => {
                 justifyContent: 'center',
                 alignItems: 'center'
             }}>
-                <Login/>
+                {
+                    isSignup?
+                    <Signup/>:
+                    <Login/>
+                }
                 <Box sx={{
                     height: '100%',
                     width: '90%'

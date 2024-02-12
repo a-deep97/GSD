@@ -13,7 +13,8 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path='/auth' element={<AuthPage/>} />
+          <Route path='/auth' element={<AuthPage/>} /> 
+          <Route path='/auth/:isSignup' element={<AuthPage/>} />
           <Route path='/' element={<TasksPage/>} />
           <Route path='/tasks' element={<TasksPage/>} />
           <Route path='/projects' element={<ProjectsPage/>} />
