@@ -1,28 +1,25 @@
-// middle ware to verify token
-// authMiddleware.js
 
+const router = express.Router();
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = process.env;
 
-const authMiddleware = (req, res, next) => {
-  // Extract the token from the Authorization header
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
-  
+const authenticateToken = (req, res, next) => {
+  const token = req.headers['authorization'];
   if (!token) {
-    return res.status(401).json({ message: 'Unauthorized: No token provided' });
+    return res.status(401).json({ message: 'Unauthorized' });
   }
 
-  // Verify the token
-  jwt.verify(token, JWT_SECRET, (err, decoded) => {
+  jwt.verify(token, 'your-secret-key', (err, user) => {
     if (err) {
-      return res.status(403).json({ message: 'Forbidden: Invalid token' });
+      return res.status(403).json({ message: 'Invalid token' });
     }
-
-    // Attach the decoded token payload to the request object for further use
-    req.user = decoded;
+    req.user = user;
     next();
   });
 };
 
-module.exports = authMiddleware;
+router.get('/', authenticateToken, (req, res) => {
+  res.json({ message: 'Protected route', userId: req.user.userId });
+});
+
+module.exports = router;
