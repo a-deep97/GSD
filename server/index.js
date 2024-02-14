@@ -1,6 +1,7 @@
 
 require('dotenv').config();
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -9,12 +10,12 @@ const app = express();
 const router = express.Router()
 const PORT = process.env.PORT || 5000;
 
-
 const dbUrl = process.env.DB_URL;
 
-app.use(cors());
+app.use(cors({ origin: true, credentials: true }));
+app.use(cookieParser());
 
-// Connect to MongoDB using Mongoose
+// creating connection to mongodb with mongoose
 mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         console.log('Connected to MongoDB');
@@ -33,7 +34,6 @@ const protectedRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
 
 app.use(express.json());
-app.use('/',userRouter);
 app.use('/activities',activityRouter);
 app.use('/tasks',tasksRouter);
 app.use('/projects',projectsRouter);

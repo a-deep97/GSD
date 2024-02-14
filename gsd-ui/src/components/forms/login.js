@@ -1,13 +1,46 @@
 import React, { useState } from 'react';
 import { Typography, TextField, Button ,Box, Link } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
 
+    const navigate = useNavigate();
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
 
-    const handleSubmit = () =>{
+    const handleSubmit = async (e) =>{
+        e.preventDefault()
+        const userData ={
+            email: email,
+            password: password
+        }
+        fetch('http://localhost:5000/user/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userData),
+            credentials: 'include',
+        })
+        .then(response => {
+            debugger
+            if (!response.ok) {
+                throw new Error('Login failed');
+            }
+            return response.json();
+        })
+        .then(responseData => {
+            console.log(responseData.message);
+            const { token } = responseData;
 
+            // Storing JWT token in cookie
+            document.cookie = `token=${token}; path=/; HttpOnly`;
+            console.log('Login successful');
+            navigate('/tasks');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     }
     return (
         <Box sx={{

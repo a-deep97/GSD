@@ -1,22 +1,23 @@
 
-curl -X GET http://localhost:5000/users
+#curl -X GET http://localhost:5000/users
 
-#curl -X POST http://localhost:5000/auth/signup \
-#-H "Content-Type: application/json" \
-#-d '{
-#    "username": "aman1234",
-#    "firstname": "aman",
-#    "lastname": "deep",
-#    "email": "aman@example.com",
-#    "password": "password123"
-#}'
-
-#curl -X POST http://localhost:5000/auth/login \
-#-H "Content-Type: application/json" \
-#-d '{
+#POST http://localhost:5000/user/auth/signup
+#Content-Type: application/json
+#
+#{
+#    "firstname": "John",
+#    "lastname": "Doe",
 #    "email": "john@example.com",
 #    "password": "password123"
-#}'
+#}
+
+
+curl -X POST http://localhost:5000/user/auth/login \
+-H "Content-Type: application/json" \
+-d '{
+    "email": "aman@gmail.com",
+    "password": "aman"
+}'
 
 #curl -X PUT http://localhost:5000/user/65b9fcae10ff63da10379dc1 \
 #-H "Content-Type: application/json" \
