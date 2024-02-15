@@ -20,6 +20,7 @@ const authenticateToken = (req, res, next) => {
 };
 
 router.get('/', authenticateToken, (req, res) => {
+  console.log('authenticated');
   res.json({ message: 'Protected route', userId: req.user.userId });
 });
 

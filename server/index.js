@@ -33,6 +33,11 @@ const {router:activityRouter} = require('./routes/activity');
 const protectedRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
 
+
+app.use('/user',userRouter);
+
+app.use('/auth',protectedRouter);
+
 app.use(express.json());
 app.use('/activities',activityRouter);
 app.use('/tasks',tasksRouter);
@@ -40,8 +45,6 @@ app.use('/projects',projectsRouter);
 app.use('/project',projectRouter);
 app.use('/search',searchRouter);
 app.use('/task',taskRouter);
-app.use('/auth',protectedRouter);
-app.use('/user',userRouter);
 
 
 app.listen(PORT, () => {
