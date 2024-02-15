@@ -1,6 +1,7 @@
 import React from 'react';
 import { Select,MenuItem,Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import {jwtToken,clearCookie} from '../../lib/jwt';
 
 const NavOptions = () => {
 
@@ -9,10 +10,13 @@ const NavOptions = () => {
         console.log("settings clicked");
     }
     const handleLogout = () =>{
+        
+        const token = jwtToken()
         fetch('http://localhost:5000/user/auth/logout',{
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization' : 'Bearer ' + jwtToken()
             },
             credentials: 'include',
         })
@@ -20,6 +24,8 @@ const NavOptions = () => {
             if(!response.ok){
                 throw Error('Logout failed')
             }
+            debugger
+            clearCookie()
             navigate('/auth');
         })
         .catch(error=>{

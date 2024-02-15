@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../DB/models/user');
-const { JWT_SECRET } = process.env;
+const { JWT_COOKIE_KEY, JWT_SECRET } = process.env;
 
 router.post('/auth/signup', async (req, res) => {
     try {
@@ -39,11 +39,6 @@ router.post('/auth/login', async (req, res) => {
         }
         
         const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '1h' });
-        res.cookie('gsd_user_token',token,{
-            maxAge: 36000000,
-            httpOnly:true,
-            path: '/'
-        });
         res.status(200).json({ message: 'Login successful', token });
         //Need to figure out why this is not working
         //res.cookie('gsd_token', token,{maxAge:36000000, httpOnly: true});
@@ -81,9 +76,12 @@ router.put('/user/:id', async (req, res) => {
 
 router.post('/auth/logout', (req, res) => {
 
-    console.log(req.cookies)
-    res.clearCookie('jwtToken');
-    res.status(200).json({ message: 'Logout successful' });
+    try{
+        console.log('blacklist jwt with redis: TODO');
+    }catch(error){
+        console.error('Error logging out',error);
+        res.status(500).json({message: 'Internal server Error'})
+    }
 });
 
 router.get('/users', async (req, res) => {
