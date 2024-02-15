@@ -78,6 +78,7 @@ router.post('/auth/logout', (req, res) => {
 
     try{
         console.log('blacklist jwt with redis: TODO');
+        res.status(200).json({message:'Logout Successful'});
     }catch(error){
         console.error('Error logging out',error);
         res.status(500).json({message: 'Internal server Error'})

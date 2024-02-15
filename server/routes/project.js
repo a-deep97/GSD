@@ -4,7 +4,7 @@ const router = express.Router();
 
 const Project = require('../DB/models/project');
 const {addActivity} = require('./activity');
-const generateUniqueNumber = require('../lib/unique_id');
+const generateUniqueNumber = require('../lib/utils/unique_id');
 const actionType = require('../lib/constants/action_type');
 
 // Gets a project content

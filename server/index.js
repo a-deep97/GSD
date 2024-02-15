@@ -30,16 +30,14 @@ const projectRouter = require('./routes/project');
 const searchRouter = require('./routes/search');
 const taskRouter = require('./routes/task');
 const {router:activityRouter} = require('./routes/activity');
-const protectedRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
+const authenticateToken = require('./lib/middlewares/auth');
 
 app.use(express.json());
 app.use('/user',userRouter);
 
-app.use('/auth',protectedRouter);
-
 app.use('/activities',activityRouter);
-app.use('/tasks',tasksRouter);
+app.use('/tasks',authenticateToken,tasksRouter);
 app.use('/projects',projectsRouter);
 app.use('/project',projectRouter);
 app.use('/search',searchRouter);

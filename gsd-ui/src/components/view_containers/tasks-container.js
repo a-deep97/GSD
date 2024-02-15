@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {Box} from '@mui/material';
 
 import TaskListContainer from './task-list-container';
 import Status from '../../constants/status';
+import {jwtToken} from '../../lib/jwt';
 
 const TasksContainer = () => {
 
+    const navigate = useNavigate();
     const [noneTasks,setNoneTasks] = useState([]);
     const [inProgressTasks,setInProgressTasks] = useState([]);
     const [plannedTasks,setPlannedTasks] = useState([]);
@@ -13,8 +16,17 @@ const TasksContainer = () => {
     const [backlogTasks,setBacklogTasks] = useState([]);    
     useEffect(()=>{
         const fetchTasks = () =>{
-            fetch('http://localhost:5000/tasks')
+            fetch('http://localhost:5000/tasks',{
+                method: 'GET',
+                headers: {
+                    'Authorization' : 'Bearer ' + jwtToken()
+                },
+                credentials: 'include',
+            })
                 .then(response => {
+                    if(response.status==403){
+                        navigate('/auth')
+                    }
                     if (!response.ok) {
                     throw new Error('Network response was not ok');
                     }

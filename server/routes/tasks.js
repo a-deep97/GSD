@@ -3,7 +3,6 @@ const router = express.Router();
 const Task = require('../DB/models/task');
 
 router.get('/', async (req, res) => {
-    console.log(req.headers['authorization'])
     try {
         const tasks = await Task.find();
         res.json(tasks);

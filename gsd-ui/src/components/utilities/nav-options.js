@@ -10,7 +10,7 @@ const NavOptions = () => {
         console.log("settings clicked");
     }
     const handleLogout = () =>{
-        
+        console.log('logout clicked')
         const token = jwtToken()
         fetch('http://localhost:5000/user/auth/logout',{
             method: 'POST',

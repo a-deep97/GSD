@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 const Task = require('../DB/models/task');
-const generateUniqueNumber = require('../lib/unique_id');
+const generateUniqueNumber = require('../lib/utils/unique_id');
 const actionType = require('../lib/constants/action_type');
 const {addActivity} = require('./activity');
 
