@@ -34,7 +34,7 @@ const Login = () => {
             const { token } = responseData;
 
             // Storing JWT token in cookie
-            document.cookie = `token=${token}; path=/; HttpOnly`;
+            document.cookie = `token=${token}; path=/`;
             console.log('Login successful');
             navigate('/tasks');
         })

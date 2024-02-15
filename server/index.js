@@ -33,12 +33,11 @@ const {router:activityRouter} = require('./routes/activity');
 const protectedRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
 
-
+app.use(express.json());
 app.use('/user',userRouter);
 
 app.use('/auth',protectedRouter);
 
-app.use(express.json());
 app.use('/activities',activityRouter);
 app.use('/tasks',tasksRouter);
 app.use('/projects',projectsRouter);

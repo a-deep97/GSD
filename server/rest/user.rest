@@ -12,15 +12,17 @@
 #}
 
 
-curl -X POST http://localhost:5000/user/auth/login \
--H "Content-Type: application/json" \
--d '{
-    "email": "aman@gmail.com",
-    "password": "aman"
-}'
+#curl -X POST http://localhost:5000/user/auth/login \
+#-H "Content-Type: application/json" \
+#-d '{
+#    "email": "aman@gmail.com",
+#    "password": "aman"
+#}'
 
 #curl -X PUT http://localhost:5000/user/65b9fcae10ff63da10379dc1 \
 #-H "Content-Type: application/json" \
 #-d '{
 #    "firstname": "jenny"
 #}'
+
+curl -X POST http://localhost:5000/user/auth/logout

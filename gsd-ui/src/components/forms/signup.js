@@ -28,7 +28,6 @@ const Signup = () => {
             body: JSON.stringify(userData)
         })
         .then(response => {
-            debugger
             if (!response.ok) {
                 throw new Error('Login failed');
             }

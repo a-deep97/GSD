@@ -39,7 +39,11 @@ router.post('/auth/login', async (req, res) => {
         }
         
         const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '1h' });
-        
+        res.cookie('gsd_user_token',token,{
+            maxAge: 36000000,
+            httpOnly:true,
+            path: '/'
+        });
         res.status(200).json({ message: 'Login successful', token });
         //Need to figure out why this is not working
         //res.cookie('gsd_token', token,{maxAge:36000000, httpOnly: true});
@@ -75,7 +79,9 @@ router.put('/user/:id', async (req, res) => {
 });
 
 
-router.post('auth/logout', (req, res) => {
+router.post('/auth/logout', (req, res) => {
+
+    console.log(req.cookies)
     res.clearCookie('jwtToken');
     res.status(200).json({ message: 'Logout successful' });
 });

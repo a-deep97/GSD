@@ -7,7 +7,12 @@ import CreateTaskButton from './buttons/create-task-button';
 
 const TasksPage = () => {
     return (
-        <Box display='flex' flexDirection='column' alignContent='flex-start' alignItems='center'>
+        <Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            alignContent: 'center',
+        }}>
             <TopNavbar/>
             <Box style={{
                     'width': '100%',
@@ -16,7 +21,6 @@ const TasksPage = () => {
                 alignContent='flex-start'
                 alignItems='center'
                 marginTop={2}
-                marginLeft={5}
                 >
                     <CreateTaskButton/>
             </Box>
