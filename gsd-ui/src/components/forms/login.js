@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Typography, TextField, Button ,Box, Link } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login = ({setIsloggedIn}) => {
 
     const navigate = useNavigate();
     const [email,setEmail] = useState('');
@@ -36,6 +36,7 @@ const Login = () => {
             // Storing JWT token in cookie
             document.cookie = `gsd_user_token=${token}; path=/`;
             console.log('Login successful');
+            setIsloggedIn(true);
             navigate('/tasks');
         })
         .catch(error => {

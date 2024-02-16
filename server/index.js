@@ -36,12 +36,12 @@ const authenticateToken = require('./lib/middlewares/auth');
 app.use(express.json());
 app.use('/user',userRouter);
 
-app.use('/activities',activityRouter);
+app.use('/activities',authenticateToken,activityRouter);
 app.use('/tasks',authenticateToken,tasksRouter);
-app.use('/projects',projectsRouter);
-app.use('/project',projectRouter);
-app.use('/search',searchRouter);
-app.use('/task',taskRouter);
+app.use('/projects',authenticateToken,projectsRouter);
+app.use('/project',authenticateToken,projectRouter);
+app.use('/search',authenticateToken,searchRouter);
+app.use('/task',authenticateToken,taskRouter);
 
 
 app.listen(PORT, () => {

@@ -4,7 +4,7 @@ import { Box } from '@mui/material';
 import Signup from './forms/signup';
 import { useParams } from 'react-router-dom';
 
-const AuthPage = () => {
+const AuthPage = ({setIsloggedIn}) => {
     const {isSignup} = useParams();
     const authImage = require('../static/media/auth-img.jpg')
     return (
@@ -25,7 +25,7 @@ const AuthPage = () => {
                 {
                     isSignup?
                     <Signup/>:
-                    <Login/>
+                    <Login setIsloggedIn={setIsloggedIn}/>
                 }
                 <Box sx={{
                     height: '100%',

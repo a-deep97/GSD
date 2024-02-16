@@ -4,8 +4,12 @@ import {Box} from '@mui/material';
 import ProjectListContainer from './project-list-container';
 import Status from '../../constants/status';
 
+import { jwtToken } from '../../lib/jwt';
+import { useNavigate } from 'react-router-dom';
+
 const ProjectsContainer = () => {
 
+    const navigate = useNavigate();
     const [noneProjects,setNoneProjects] = useState([]);
     const [inProgressProjects,setInProgressProjects] = useState([]);
     const [plannedProjects,setPlannedProjects] = useState([]);
@@ -13,8 +17,19 @@ const ProjectsContainer = () => {
     const [backlogProjects,setBacklogProjects] = useState([]);    
     useEffect(()=>{
         const fetchProjects = () =>{
-            fetch('http://localhost:5000/projects')
+            fetch('http://localhost:5000/projects',{
+                    method: 'GET',
+                    headers: {
+                        'Authorization' : 'Bearer ' + jwtToken()
+                    },
+                    credentials: 'include',
+                })
                 .then(response => {
+                    debugger
+                    if (response.status == 403){
+                        console.error('Access denied');
+                        navigate('/auth')
+                    }
                     if (!response.ok) {
                     throw new Error('Network response was not ok');
                     }

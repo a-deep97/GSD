@@ -6,6 +6,8 @@ import SearchBar from './search-bar';
 import FilterBar from './filter-bar';
 import SearchResults from './search-results';
 
+import { jwtToken } from '../../lib/jwt';
+
 const SearchContainer = () => {
 
     const navigate = useNavigate();
@@ -20,21 +22,31 @@ const SearchContainer = () => {
       }
     },[tasks,projects])
     const fetchData = (searchtext) =>{
-      fetch(`http://localhost:5000/search/${searchtext}`)
-          .then(response => {
-            if (response.ok) {
-              return response.json();
-            }
-            throw new Error('Failed to fetch search results');
-          })
-          .then(data => {
-            console.log("data",data);
-            setProjects(data.projects);
-            setTasks(data.tasks);
-          })
-          .catch(error => {
-            console.error('Error:', error);
-          });
+      fetch(`http://localhost:5000/search/${searchtext}`,{
+        method: 'GET',
+        headers: {
+            'Authorization' : 'Bearer ' + jwtToken()
+        },
+        credentials: 'include',
+        })
+        .then(response => {
+          debugger;
+          if(response.status==403){
+            navigate('/auth')
+        }
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error('Failed to fetch search results');
+        })
+        .then(data => {
+          console.log("data",data);
+          setProjects(data.projects);
+          setTasks(data.tasks);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
     }
     const handleSearch =  (searchtext) =>{
         setIsloading(true)
