@@ -1,5 +1,9 @@
 import React from 'react';
 import { Select,MenuItem,Box } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import SettingsIcon from '@mui/icons-material/Settings';
+import LogoutIcon from '@mui/icons-material/Logout';
+
 import { useNavigate } from 'react-router-dom';
 import {jwtToken,clearCookie} from '../../lib/jwt';
 
@@ -46,8 +50,18 @@ const NavOptions = () => {
                 }}
                 inputProps={{ 'aria-label': 'Select an option' }}
                 >
-                <MenuItem onClick={handleSettings}>Settings</MenuItem>
-                <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                <MenuItem onClick={handleSettings}>
+                    <IconButton size="small" color="inherit">
+                        <SettingsIcon />
+                    </IconButton>
+                    Settings
+                </MenuItem>
+                <MenuItem onClick={handleLogout}>
+                    <IconButton size="small" color="inherit">
+                        <LogoutIcon />
+                    </IconButton>
+                    Logout
+                </MenuItem>
             </Select>
         </Box>
       );
