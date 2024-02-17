@@ -104,7 +104,7 @@ const TaskView = ({ open, onClose,taskId ,task }) => {
       style={{
         'display': 'flex',
         'justify-content': 'center',
-        'align-items': 'center'
+        'align-items': 'center',
       }}
       slotProps={{
         Backdrop : {
@@ -121,59 +121,109 @@ const TaskView = ({ open, onClose,taskId ,task }) => {
           <IconButton  onClick={handleOnclose}>
             <CloseIcon />
           </IconButton>
-          <CardContent>
+          <CardContent
+            
+          >
           <Box display='flex' flexDirection='row' alignItems='center' alignContent='flex-start'>
-                <Typography variant='h4' marginLeft='5px' color="textSecondary">
-                    {taskId}
-                </Typography>
-                <Typography marginLeft='10px' variant="h6" color='black'>
-                    { task && task.title}
-                </Typography>
+              <Typography variant='h4' marginLeft='5px' color="textSecondary">
+                  {taskId}
+              </Typography>
+              <Typography marginLeft='10px' variant="h6" color='black'>
+                  { task && task.title}
+              </Typography>
+          </Box>
+          <Box display='flex' 
+            marginTop={2} width='97%' 
+            flexDirection='row' 
+            alignContent='flex-start' 
+            alignItems='space-between' 
+            justifyContent='space-between'>
+              <Box display='flex' 
+                flexDirection='column' 
+                alignItems='center'
+                justifyContent='space-around'
+                width='200px'
+                >
+                <StatusDropdown status={taskStatus} handleStatusDropdown={handleStatusDropdown} width='70%'
+                  sx={{
+                      marginTop: '10px',
+                      width: '90%'
+                  }}
+                />
+                <ProjectInput currentValue = {projectId} setInputValue={handleProjectInput}/>
+              </Box>
+              <Box marginLeft={2} display='flex' flexDirection='column' justifyContent='center' alignItems='center' width='50%'>
+                  <Box marginLeft='5px' display='flex' flexDirection='column' alignContent='center' alignItems='flex-start'>
+                      <Typography variant='caption'>
+                          start
+                      </Typography>
+                      <CustomDatePicker Date={startDate} handleDateChange={handleTargetDateChange}/>
+                  </Box>
+                  <Box marginLeft='5px' display='flex' flexDirection='column' alignContent='center' alignItems='flex-start'>
+                      <Typography variant='caption'>
+                          target
+                      </Typography>
+                      <CustomDatePicker Date={targetDate} handleDateChange={handleStartDateChange}/>
+                  </Box>
+              </Box>
             </Box>
-            <Box display='flex' 
-              marginTop={2} width='97%' 
-              flexDirection='row' 
-              alignContent='flex-start' 
-              alignItems='space-between' 
-              justifyContent='space-between'>
-                <Box display='flex' 
-                  flexDirection='column' 
-                  alignItems='center'
-                  justifyContent='space-around'
-                  width='200px'
-                  >
-                  <StatusDropdown status={taskStatus} handleStatusDropdown={handleStatusDropdown} width='70%'
-                    sx={{
-                        marginTop: '10px',
-                        width: '90%'
-                    }}
-                  />
-                  <ProjectInput currentValue = {projectId} setInputValue={handleProjectInput}/>
-                </Box>
-                <Box marginLeft={2} display='flex' flexDirection='column' justifyContent='center' alignItems='center' width='50%'>
-                    <Box marginLeft='5px' display='flex' flexDirection='column' alignContent='center' alignItems='flex-start'>
-                        <Typography variant='caption'>
-                            start
-                        </Typography>
-                        <CustomDatePicker Date={startDate} handleDateChange={handleTargetDateChange}/>
-                    </Box>
-                    <Box marginLeft='5px' display='flex' flexDirection='column' alignContent='center' alignItems='flex-start'>
-                        <Typography variant='caption'>
-                            target
-                        </Typography>
-                        <CustomDatePicker Date={targetDate} handleDateChange={handleStartDateChange}/>
-                    </Box>
-                </Box>
-            </Box>
-            <Box style={{
-                height: '100px',
-                textOverflow: 'ellipsis',
-                }}
-                marginTop={2}
+            <Box 
+              display={'flex'}
+              flexDirection={'column'}
+              overflow={'scroll'}
+              sx={{
+                margin: '10px',
+                height: '400px',
+                width: '100%',
+                overflowX: 'hidden',
+                scrollbarWidth: 'none'
+              }}
             >
+              <Box style={{
+                  textOverflow: 'ellipsis',
+                  }}
+                  marginTop={2}
+                  height={'auto'}
+              > 
+                <Box
+                  sx={{
+                    backgroundColor: '#f2f2f2',
+                    boxShadow: '0 2px 2px rgba(0, 0, 0, 0.1)',
+                    borderBottom: '1px solid #ccc',
+                    borderRadius: '5px',
+                    padding: '5px',
+                  }}
+                  width={'100%'}
+                >
+                  <Typography variant="subtitle1" color="textPrimary">
+                    Description
+                  </Typography>
+                </Box>
                 <Typography variant='caption'>
-                    {task && task.description}
+                    {task && task.description}                    
                 </Typography>
+              </Box>
+              <Box
+                sx={{
+                  minHeight: '300px',
+                  marginTop: '50px'
+                }}
+              >
+                <Box
+                  sx={{
+                    backgroundColor: '#f2f2f2',
+                    boxShadow: '0 2px 2px rgba(0, 0, 0, 0.1)',
+                    borderBottom: '1px solid #ccc',
+                    borderRadius: '5px',
+                    padding: '5px',
+                  }}
+                  width={'100%'}
+                >
+                  <Typography variant="subtitle1" color="textPrimary">
+                    Activity and comments
+                  </Typography>
+                </Box>
+              </Box>
             </Box>
           </CardContent>
         </Card>
