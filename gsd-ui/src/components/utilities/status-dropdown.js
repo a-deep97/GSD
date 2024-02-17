@@ -17,12 +17,12 @@ const StatusDropdown = ({status,handleStatusDropdown ,width,height}) => {
     }
     return (
         <FormControl style={{
-            width: width? width : '120px',
+            width: '90%',
             height: height ? height : '35px',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            marginLeft: '10px',
+            marginTop: '10px',
         }}
         >
             <Select
@@ -35,9 +35,6 @@ const StatusDropdown = ({status,handleStatusDropdown ,width,height}) => {
                 style={{
                     width: '100%',
                     height: height ? height : '30px',
-                    paddingTop: '0',
-                    paddingBottom: '0',
-                    paddingLeft: '0',
                 }}
                 sx={{
                     backgroundColor: StatusColorCode[status],

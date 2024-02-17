@@ -115,8 +115,8 @@ const TaskView = ({ open, onClose,taskId ,task }) => {
     >
       <Fade in={openTaskView}>
         <Card  style={{
-            width:'700px',
-            height: '550px'
+            width:'500px',
+            height: '100vh'
             }}>
           <IconButton  onClick={handleOnclose}>
             <CloseIcon />
@@ -126,32 +126,31 @@ const TaskView = ({ open, onClose,taskId ,task }) => {
                 <Typography variant='h4' marginLeft='5px' color="textSecondary">
                     {taskId}
                 </Typography>
-                <Typography marginLeft='10px' variant="h6" color='primary'>
+                <Typography marginLeft='10px' variant="h6" color='black'>
                     { task && task.title}
                 </Typography>
             </Box>
-            <Box display='flex' marginTop={2} width='97%' flexDirection='row' alignContent='flex-start' alignItems='center'>
-                {
-                  isProjectSearchActive?
-                  <ProjectInput currentValue = {projectId} setInputValue={handleProjectInput}/>:
-                  <Typography variant="h6" component="p" width='30%'
-                      sx={{ overflow: 'hidden', 
-                      textOverflow: 'ellipsis', 
-                      whiteSpace: 'nowrap' ,
-                      width: '200px',
-                      height: '40px',
-                      boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.75)',
-                      backgroundColor: 'rgba(0,0,0,0.5)',
-                      cursor: 'pointer',
-                      textAlign: 'center',
-                      }}
-                      onClick={handleProjectFieldClick}
-                    >
-                      { projectId ?projectId : 'None'}
-                    </Typography>
-                }
-                <StatusDropdown status={taskStatus} handleStatusDropdown={handleStatusDropdown} width='30%' />
-                <Box marginLeft={2} display='flex' flexDirection='row' justifyContent='center' alignItems='center' width='50%'>
+            <Box display='flex' 
+              marginTop={2} width='97%' 
+              flexDirection='row' 
+              alignContent='flex-start' 
+              alignItems='space-between' 
+              justifyContent='space-between'>
+                <Box display='flex' 
+                  flexDirection='column' 
+                  alignItems='center'
+                  justifyContent='space-around'
+                  width='200px'
+                  >
+                  <StatusDropdown status={taskStatus} handleStatusDropdown={handleStatusDropdown} width='70%'
+                    sx={{
+                        marginTop: '10px',
+                        width: '90%'
+                    }}
+                  />
+                  <ProjectInput currentValue = {projectId} setInputValue={handleProjectInput}/>
+                </Box>
+                <Box marginLeft={2} display='flex' flexDirection='column' justifyContent='center' alignItems='center' width='50%'>
                     <Box marginLeft='5px' display='flex' flexDirection='column' alignContent='center' alignItems='flex-start'>
                         <Typography variant='caption'>
                             start

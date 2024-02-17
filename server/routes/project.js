@@ -121,7 +121,7 @@ router.delete('/:id', async (req, res) => {
 
 router.get('/search/:searchString', async (req, res) => {
     const searchString = req.params.searchString;
-
+    console.log(searchString)
     try {
         const projects = await Project.find({
             $or: [
@@ -129,7 +129,7 @@ router.get('/search/:searchString', async (req, res) => {
                 { title: { $regex: new RegExp(searchString, 'i') } },
                 { description: { $regex: new RegExp(searchString, 'i') } },
             ]
-        });
+        }).limit(5);
 
         res.json(projects);
     } catch (error) {

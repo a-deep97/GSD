@@ -25,7 +25,7 @@ const ProjectsContainer = () => {
                     credentials: 'include',
                 })
                 .then(response => {
-                    debugger
+            
                     if (response.status == 403){
                         console.error('Access denied');
                         navigate('/auth')

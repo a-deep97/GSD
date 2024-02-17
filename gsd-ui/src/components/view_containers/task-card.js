@@ -108,7 +108,7 @@ const TaskCard = ({taskId,task}) => {
                     display='flex' 
                     flexDirection='column'
                     sx={{
-                        height: expanded ? '120px' : '70px',
+                        height: expanded ? '150px' : '70px',
                         transition: 'height 0.5s ease-in-out'
                     }}
                 >
@@ -158,7 +158,7 @@ const TaskCard = ({taskId,task}) => {
                     </IconButton>
                     {
                         expanded?
-                        <Box display='flex' flexDirection='row' justifyContent='center' alignItems='center'>
+                        <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
                             <CustomDatePicker Date={startDate} handleDateChange={handleTargetDateChange} dateType={DateType.START}/>
                             <CustomDatePicker Date={targetDate} handleDateChange={handleStartDateChange} dateType={DateType.TARGET}/>
                         </Box>:
