@@ -1,12 +1,13 @@
-import React ,{useState} from 'react';
+import React ,{useEffect, useState} from 'react';
 import { makeStyles } from '@mui/styles';
-import { Modal, Backdrop, Fade, Card, CardContent, Typography, IconButton } from '@mui/material';
+import { Modal, Backdrop, Fade, Card, CardContent, Typography, IconButton, Button, TextField } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { Box } from '@mui/material';
 import StatusDropdown from '../utilities/status-dropdown';
 import CustomDatePicker from '../utilities/date-picker';
 import ProjectInput from '../utilities/project-input';
 
+import { jwtToken } from '../../lib/jwt';
 
 const TaskView = ({ open, onClose,taskId ,task }) => {
 
@@ -14,39 +15,51 @@ const TaskView = ({ open, onClose,taskId ,task }) => {
     const [taskStatus,setTaskStatus] = useState(task.status);
     const [startDate,setStartDate] = useState(task.start);
     const [targetDate,setTargetDate] = useState(task.target);
+    const [description,setDescription] = useState(task.description);
     const [projectId,setProjectId] = useState(task.projectId? task.projectId : null);
     const [isProjectSearchActive ,setIsProjectSearchActive] = useState(false);
-  
+
+    const [saveButtonActive,setSaveButtonActive] = useState(false);
+    const [isDescriptionEditing, setIsDescriptionEditing] = useState(false);    
     const handleOnclose = () =>{
       setOpenTaskView(false)
       onClose()
     }
     const handleStatusDropdown = (currentStatus) =>{
-      updateTaskDetails({
-        'status': currentStatus
-      })
-      window.location.reload()
+      setSaveButtonActive(true)
+      setTaskStatus(currentStatus)
     }
     const handleTargetDateChange = (date) => {
       setTargetDate(date);
-      updateTaskDetails({
-        'start': date
-      })
+      setSaveButtonActive(true)
   }
   const handleStartDateChange = (date) =>{
       setStartDate(date)
-      updateTaskDetails({
-        'target': date
-      })
+      setSaveButtonActive(true)
   }
-  const handleProjectFieldClick = () =>{
-    setIsProjectSearchActive(true);
+  const handleSave = (e) =>{
+    e.preventDefault();
+    debugger
+    updateTaskDetails({
+      'start': startDate,
+      'target': targetDate,
+      'status': taskStatus,
+      'description': description
+    })
+    setSaveButtonActive(false);
+  }
+  const handleDescriptionChange = (updatedDescription) =>{
+    setDescription(updatedDescription);
+    setSaveButtonActive(true);
+  }
+  const handleDescriptionClick = () =>{
+    setIsDescriptionEditing(true);
+  }
+  const handleInputBlur = () =>{
+    setIsDescriptionEditing(false);
   }
   const handleProjectInput = (projectId) =>{
-    /**
-     * this method updates the project when selected 
-     * from the search component and 
-     */
+    
     const formData = {
       'projectId': projectId,
       }
@@ -78,11 +91,14 @@ const TaskView = ({ open, onClose,taskId ,task }) => {
     fetch(url, {
         method: 'PUT',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization' : 'Bearer ' + jwtToken()
         },
+        credentials: 'include',
         body: JSON.stringify(data)
       })
       .then(response => {
+        debugger
           if (!response.ok) {
           throw new Error('Network response was not ok');
           }
@@ -121,10 +137,18 @@ const TaskView = ({ open, onClose,taskId ,task }) => {
           <IconButton  onClick={handleOnclose}>
             <CloseIcon />
           </IconButton>
-          <CardContent
-            
-          >
-          <Box display='flex' flexDirection='row' alignItems='center' alignContent='flex-start'>
+          <CardContent>
+            {saveButtonActive? <Button 
+                variant='contained'
+                sx={{
+                  width: '100px',
+                  height: '30px',
+                  marginBottom: '5px'
+                }}
+                onClick={handleSave}
+              > Save
+              </Button> :null }
+            <Box display='flex' flexDirection='row' alignItems='center' alignContent='flex-start'>
               <Typography variant='h4' marginLeft='5px' color="textSecondary">
                   {taskId}
               </Typography>
@@ -179,8 +203,9 @@ const TaskView = ({ open, onClose,taskId ,task }) => {
                 scrollbarWidth: 'none'
               }}
             >
-              <Box style={{
+              <Box sx={{
                   textOverflow: 'ellipsis',
+                  cursor: 'text'
                   }}
                   marginTop={2}
                   height={'auto'}
@@ -199,9 +224,20 @@ const TaskView = ({ open, onClose,taskId ,task }) => {
                     Description
                   </Typography>
                 </Box>
-                <Typography variant='caption'>
-                    {task && task.description}                    
-                </Typography>
+                {isDescriptionEditing && (
+                  <TextField
+                    value={description}
+                    onChange={(e) => handleDescriptionChange(e.target.value)}
+                    onBlur={handleInputBlur}
+                    fullWidth
+                    variant="outlined"
+                  />
+                )}
+                {!isDescriptionEditing && (
+                <Typography variant="body1"
+                  onClick={handleDescriptionClick}
+                >{description}</Typography>
+              )}
               </Box>
               <Box
                 sx={{
